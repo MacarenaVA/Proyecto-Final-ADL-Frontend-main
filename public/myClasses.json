@@ -1,0 +1,22 @@
+[{
+  "desc": "Cuidados Básicos para tu nuevo compañero",
+  "id": "puppy1",
+  "img": "/public/img/cama1.jpg",
+  "name": "Clases cachorro",
+  "price": 30000,
+  "id_usu": 3,
+  "asignatura": "cachorros",
+  "nivel": "Todos",
+  "horario":" Lunes, Miercoles y Viernes"
+},
+{
+  "desc": "10 Clases de Entrenamiento Básico para mascotas de 1 hora",
+  "id": "entrenamiento1",
+  "img": "/public/img/home2.jpg",
+  "name": "Clases entrenamiento basico",
+  "price": 40000,
+  "id_usu": 4,
+  "asignatura": "Entrenamiento Canino",
+  "nivel": "Basico",
+  "horario":"Todos los viernes y sábados del mes"
+}]

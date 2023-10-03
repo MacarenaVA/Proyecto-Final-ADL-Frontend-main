@@ -1,0 +1,10 @@
+[{
+  "desc": "Enseña a ir al baño a tu mascota",
+  "img" : "/public/img/poleron1.jpg",
+  "name": "Clases higiene",
+  "price": 10000,
+  "id_usu": 1,
+  "materia": "cachorros",
+  "nivel": "Basica/Media",
+  "horario":"Todos los dias"
+}]

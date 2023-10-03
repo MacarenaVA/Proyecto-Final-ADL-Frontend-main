@@ -1,0 +1,14 @@
+
+  {
+    "desc": "5 Clases de 45 min a elección",
+    "id": "clases 01",
+    "img": "/public/img/cama2.jpg",
+    "name": "Clases promo",
+    "price": 50000,
+    "id_usu": 1,
+    "asignatura": "Eentrenamiento",
+    "nivel": "Basico/Medio",
+    "horario":"Todos los dias"
+  }
+
+  
