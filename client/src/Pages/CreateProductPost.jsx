@@ -82,7 +82,7 @@ function CreateProductPost() {
             </Link>
           </li>
           <li>
-            <Link to="/crear-publicacion" className="profile-link active">
+            <Link to="/crear-publicación" className="profile-link active">
               Crear Publicación
             </Link>
           </li>

@@ -27,7 +27,7 @@ const AppRouter = () => {
         <Route path="/mi-perfil" element={<Profile />} />
         <Route path="/modificar-perfil" element={<ModifyProfile />} />
         <Route path="/mis-favoritos" element={<Favorites />} />
-        <Route path="/crear-publicacion" element={<CreateProductPost />} />
+        <Route path="/crear-publicación" element={<CreateProductPost />} />
         <Route path="/mis-publicaciones" element={<MyPosts />} />
       </Routes>
     </>

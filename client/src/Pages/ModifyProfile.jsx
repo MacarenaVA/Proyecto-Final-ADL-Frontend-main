@@ -46,7 +46,7 @@ function ModifyProfile() {
             </Link>
           </li>
           <li>
-            <Link to="/crear-publicacion" className="profile-link">
+            <Link to="/crear-publicación" className="profile-link">
               Crear Publicación
             </Link>
           </li>
