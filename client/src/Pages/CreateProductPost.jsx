@@ -11,6 +11,8 @@ function CreateProductPost() {
     price: "",
   })
 
+  const [image, setImage] = useState(null)
+
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleProductChange = (e) => {
@@ -18,17 +20,25 @@ function CreateProductPost() {
     setProduct({ ...product, [name]: value })
   }
 
+  const handleImageChange = (e) => {
+    const selectedImage = e.target.files[0]
+    setImage(selectedImage)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
 
     try {
+      const formData = new FormData()
+      formData.append("title", product.title)
+      formData.append("description", product.description)
+      formData.append("price", product.price)
+      formData.append("image", image)
+
       const response = await fetch("URL_DE_TU_API_PARA_CREAR_PUBLICACIONES", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(product),
+        body: formData,
       })
 
       if (response.ok) {
@@ -119,6 +129,17 @@ function CreateProductPost() {
               name="price"
               value={product.price}
               onChange={handleProductChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="image">Imagen:</label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleImageChange}
               required
             />
           </div>
