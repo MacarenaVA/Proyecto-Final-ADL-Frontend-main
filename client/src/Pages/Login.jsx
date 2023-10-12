@@ -20,7 +20,7 @@ const Login = () => {
     if (email === "usuario@example.com" && password === "contraseña") {
       login({ username: "usuario@example.com" })
 
-      navigate("/profile")
+      navigate("/mi-perfil")
     } else {
       alert("Credenciales incorrectas")
     }

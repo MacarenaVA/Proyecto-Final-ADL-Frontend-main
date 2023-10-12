@@ -1,7 +1,8 @@
-import { NavLink } from "react-router-dom"
+import { NavLink, Link } from "react-router-dom"
 import logo from "../assets/logo.png"
 import { useContext } from "react"
 import { MyContext } from "../context/MyContext"
+import { AuthContext } from "../context/AuthContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCat,
@@ -13,8 +14,8 @@ import {
 
 const Header = () => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
-  const { countProducts } = useContext(MyContext)
-  const { allProducts } = useContext(MyContext)
+  const { countProducts, allProducts } = useContext(MyContext)
+  const { user } = useContext(AuthContext)
 
   return (
     <div className="header-container">
@@ -37,20 +38,29 @@ const Header = () => {
             <FontAwesomeIcon icon={faDog} />
             Perros
           </NavLink>
-          <NavLink to="/login">
-            <FontAwesomeIcon icon={faUser} />
-            Ingresar
-          </NavLink>
-          <NavLink to="/register">
-            <FontAwesomeIcon icon={faUserPlus} />
-            Registrarse
-          </NavLink>
+          {user ? (
+            <NavLink to="/mi-perfil">
+              <FontAwesomeIcon icon={faUser} />
+              Perfil
+            </NavLink>
+          ) : (
+            <>
+              <NavLink to="/login">
+                <FontAwesomeIcon icon={faUser} />
+                Ingresar
+              </NavLink>
+              <NavLink to="/register">
+                <FontAwesomeIcon icon={faUserPlus} />
+                Registrarse
+              </NavLink>
+            </>
+          )}
         </div>
         <NavLink className={activeClass} to="/cart">
           <div className="header-r">
             <i className="fa-solid fa-cart-shopping"></i>
             <p
-              className={`cart-num ${allProducts.length == 0 ? "hidden" : ""}`}
+              className={`cart-num ${allProducts.length === 0 ? "hidden" : ""}`}
             >
               {countProducts}
             </p>

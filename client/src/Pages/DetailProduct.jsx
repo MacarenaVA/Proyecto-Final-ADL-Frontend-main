@@ -56,14 +56,15 @@ const DetailProduct = () => {
           </p>
           <p>{product.desc}</p>
           <div className="buy">
+            <h3>Precio: ${chile.format(product.price)}</h3>
+          </div>
+          <div className="buy">
             <button
               onClick={() => onAddProduct(product)}
               className="add-detail"
             >
-              Agregar al Carrito ({product.qty || 0} en el carrito)
+              Agregar al Carrito
             </button>
-
-            <h3>Precio: ${chile.format(product.price)}</h3>
           </div>
         </div>
         <div className="detail-r">

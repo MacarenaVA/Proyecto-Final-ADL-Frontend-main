@@ -1,5 +1,7 @@
 import React, { useContext } from "react"
 import { MyContext } from "../context/MyContext"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 const Cart = () => {
   const chile = new Intl.NumberFormat("es-CL")
@@ -57,19 +59,21 @@ const Cart = () => {
                 </div>
               </div>
               <div className="card-r">
-                <button
-                  className="quantity-button"
+                <FontAwesomeIcon
+                  icon={faMinus}
+                  className="fa-minus"
                   onClick={() => updateProductQuantity(product, -1)}
                 >
                   -
-                </button>
+                </FontAwesomeIcon>
                 <p className="each-qty">{product.qty}</p>
-                <button
-                  className="quantity-button"
+                <FontAwesomeIcon
+                  icon={faPlus}
+                  className="fa-plus"
                   onClick={() => updateProductQuantity(product, 1)}
                 >
                   +
-                </button>
+                </FontAwesomeIcon>
                 <p className="subtotal">
                   ${chile.format(product.price * product.qty)}
                 </p>
