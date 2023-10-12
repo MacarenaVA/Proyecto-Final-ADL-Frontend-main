@@ -3,12 +3,13 @@ const express = require("express")
 const router = express.Router()
 
 const { registeredUsers } = require("../consultas/consultas")
+const { checkCredentialsExist } = require("../middleware/middleware")
 
 router.get("/", (req, res) => {
   res.send("Hello World")
 })
 
-router.post("/users", async (req, res) => {
+router.post("/users", checkCredentialsExist, async (req, res) => {
   try {
     const user = req.body
     await registeredUsers(user)
