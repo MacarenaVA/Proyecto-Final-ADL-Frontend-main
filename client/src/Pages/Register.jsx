@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import { Container, Paper, Typography, TextField, Button } from "@mui/material"
+import axios from "axios"
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -8,11 +9,22 @@ const Register = () => {
     password: "",
   })
 
-  const [registeredUsers, setRegisteredUsers] = useState([])
-
   const handleChange = (e) => {
     const { name, value } = e.target
     setFormData({ ...formData, [name]: value })
+  }
+
+  const registeredUsers = async (usuario) => {
+    const urlServer = "http://localhost:3000"
+    const endpoint = "/users"
+    try {
+      await axios.post(urlServer + endpoint, usuario)
+      alert("Usuario registrado con éxito")
+      // Aquí puedes redirigir al usuario a la página de inicio de sesión u otra página.
+    } catch (error) {
+      alert("Algo salió mal ...")
+      console.log(error)
+    }
   }
 
   const handleSubmit = (e) => {
@@ -24,15 +36,7 @@ const Register = () => {
       password: formData.password,
     }
 
-    setRegisteredUsers([...registeredUsers, newUser])
-
-    setFormData({
-      username: "",
-      email: "",
-      password: "",
-    })
-
-    console.log("Usuario registrado:", newUser)
+    registeredUsers(newUser)
   }
 
   return (
