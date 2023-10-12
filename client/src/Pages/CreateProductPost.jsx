@@ -78,7 +78,7 @@ function CreateProductPost() {
           </li>
           <li>
             <Link to="/mis-favoritos" className="profile-link">
-              Favoritos
+              Mis Favoritos
             </Link>
           </li>
           <li>

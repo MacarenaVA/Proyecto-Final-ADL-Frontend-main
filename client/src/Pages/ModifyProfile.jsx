@@ -31,7 +31,7 @@ function ModifyProfile() {
         </h1>
         <ul className="profile-links">
           <li>
-            <Link to="/profile" className="profile-link">
+            <Link to="/mi-perfil" className="profile-link">
               Mi Perfil
             </Link>
           </li>
@@ -42,7 +42,7 @@ function ModifyProfile() {
           </li>
           <li>
             <Link to="/mis-favoritos" className="profile-link">
-              Favoritos
+              Mis Favoritos
             </Link>
           </li>
           <li>

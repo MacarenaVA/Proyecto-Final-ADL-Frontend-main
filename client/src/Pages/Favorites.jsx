@@ -35,7 +35,7 @@ function Favorites() {
         </h1>
         <ul className="profile-links">
           <li>
-            <Link to="/profile" className="profile-link">
+            <Link to="/mi-perfil" className="profile-link">
               Mi Perfil
             </Link>
           </li>
@@ -46,7 +46,7 @@ function Favorites() {
           </li>
           <li>
             <Link to="/mis-favoritos" className="profile-link active">
-              Favoritos
+              Mis Favoritos
             </Link>
           </li>
           <li>
