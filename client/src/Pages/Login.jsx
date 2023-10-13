@@ -24,10 +24,12 @@ const Login = () => {
   const handleLogin = async () => {
     const urlServer = "http://localhost:3000"
     const endpoint = "/login"
-    const { email, password } = user
+
     try {
-      if (!email || !password)
+      if (!user.email || !user.password) {
         return alert("Email y contraseña son obligatorias")
+      }
+
       const response = await axios.post(`${urlServer}${endpoint}`, user)
       const { data: token } = response
       alert("Usuario identificado con éxito")

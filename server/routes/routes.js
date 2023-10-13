@@ -47,7 +47,9 @@ router.post("/login", async (req, res) => {
     console.log("Token generado:", token)
     res.send(token)
   } catch (error) {
+    console.error(error)
     res.status(500).send(error)
   }
 })
+
 module.exports = router

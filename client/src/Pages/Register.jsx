@@ -20,7 +20,6 @@ const Register = () => {
     try {
       await axios.post(urlServer + endpoint, usuario)
       alert("Usuario registrado con éxito")
-      // Aquí puedes redirigir al usuario a la página de inicio de sesión u otra página.
     } catch (error) {
       alert("Algo salió mal ...")
       console.log(error)

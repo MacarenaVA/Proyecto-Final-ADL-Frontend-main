@@ -10,13 +10,10 @@ const registeredUsers = async (user) => {
 }
 
 const obtainUser = async (email) => {
-  const values = [email]
-  const consult = `SELECT * FROM users WHERE email = $2`
+  const values = [null, email]
+  const consult = "SELECT * FROM users WHERE email = $2"
 
-  const {
-    rows: [user],
-    rowCount,
-  } = await pool.query(consult, values)
+  const { rows, rowCount } = await pool.query(consult, values)
 
   if (!rowCount) {
     throw {
@@ -24,13 +21,15 @@ const obtainUser = async (email) => {
       message: "Usuario no encontrado",
     }
   }
+
+  const user = rows[0]
   delete user.password
   return user
 }
 
 const verifyUser = async (email, password) => {
   const values = [email]
-  const consult = "SELECT * FROM users WHERE email = $2"
+  const consult = "SELECT * FROM users WHERE email = $1"
 
   const { rows, rowCount } = await pool.query(consult, values)
 
