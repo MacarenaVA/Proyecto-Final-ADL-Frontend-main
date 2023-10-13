@@ -44,10 +44,10 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body
     await verifyUser(email, password)
     const token = jwt.sign({ email }, process.env.SECRET)
+    console.log("Token generado:", token)
     res.send(token)
   } catch (error) {
     res.status(500).send(error)
   }
 })
-
 module.exports = router

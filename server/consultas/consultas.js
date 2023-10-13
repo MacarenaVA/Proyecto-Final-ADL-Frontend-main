@@ -30,7 +30,7 @@ const obtainUser = async (email) => {
 
 const verifyUser = async (email, password) => {
   const values = [email]
-  const consult = "SELECT * FROM users WHERE email = $1"
+  const consult = "SELECT * FROM users WHERE email = $2"
 
   const { rows, rowCount } = await pool.query(consult, values)
 
