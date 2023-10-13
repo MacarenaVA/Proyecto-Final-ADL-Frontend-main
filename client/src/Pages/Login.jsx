@@ -1,4 +1,7 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
+import axios from "axios"
+import { AuthContext } from "../context/AuthContext"
 import {
   Box,
   Button,
@@ -7,22 +10,36 @@ import {
   TextField,
   Typography,
 } from "@mui/material"
-import { useNavigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
 
 const Login = () => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const { setUser } = useContext(AuthContext)
   const navigate = useNavigate()
-  const { login } = useAuth()
+  const [user, setLocalUser] = useState({ email: "", password: "" })
 
-  const handleLogin = () => {
-    if (email === "usuario@example.com" && password === "contraseña") {
-      login({ username: "usuario@example.com" })
+  const handleSetUser = (e) => {
+    const { value, name } = e.target
+    setLocalUser({ ...user, [name]: value })
+  }
 
+  const handleLogin = async () => {
+    const urlServer = "http://localhost:3000"
+    const endpoint = "/login"
+    const { email, password } = user
+    try {
+      if (!email || !password)
+        return alert("Email y contraseña son obligatorias")
+      const response = await axios.post(`${urlServer}${endpoint}`, user)
+      const { data: token } = response
+      alert("Usuario identificado con éxito")
+      localStorage.setItem("token", token)
+      setUser()
       navigate("/mi-perfil")
-    } else {
-      alert("Credenciales incorrectas")
+    } catch (error) {
+      if (error.response) {
+        alert(`Error: ${error.response.data.message}`)
+      } else {
+        alert("Ocurrió un error al iniciar sesión")
+      }
     }
   }
 
@@ -36,15 +53,17 @@ const Login = () => {
           <TextField
             label="Correo Electrónico"
             type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            value={user.email}
+            onChange={handleSetUser}
             fullWidth
           />
           <TextField
             label="Contraseña"
             type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            value={user.password}
+            onChange={handleSetUser}
             fullWidth
           />
           <Button

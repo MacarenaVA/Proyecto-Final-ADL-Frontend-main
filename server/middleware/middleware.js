@@ -12,16 +12,26 @@ const checkCredentialsExist = (req, res, next) => {
 }
 
 const tokenVerification = (req, res, next) => {
-  const token = req.header("Authorization").split("Bearer ")[1]
-  if (!token)
-    throw {
-      code: 401,
-      message: "Debe incluir el token de autenticación",
-    }
+  const authorizationHeader = req.header("Authorization")
+  if (!authorizationHeader || !authorizationHeader.startsWith("Bearer ")) {
+    return res
+      .status(401)
+      .json({ message: "Debe incluir un token de autenticación válido" })
+  }
 
-  const validToken = jwt.verify(token, process.env.SECRET)
-  if (!validToken) throw { code: 401, message: "El token es inválido" }
-  next()
+  const token = authorizationHeader.split("Bearer ")[1]
+
+  try {
+    const validToken = jwt.verify(token, process.env.SECRET)
+    if (validToken) {
+      next()
+    } else {
+      res.status(401).json({ message: "El token es inválido" })
+    }
+  } catch (error) {
+    console.error("Error al verificar el token:", error)
+    res.status(401).json({ message: "El token es inválido" })
+  }
 }
 
 module.exports = { checkCredentialsExist, tokenVerification }
