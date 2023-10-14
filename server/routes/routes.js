@@ -45,7 +45,7 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body
     await verifyUser(email, password)
     const token = jwt.sign({ email }, process.env.SECRET)
-    res.send(token)
+    res.send({ email, token })
   } catch (error) {
     res.status(500).send(error)
   }

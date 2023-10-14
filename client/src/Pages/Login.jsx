@@ -33,7 +33,8 @@ const Login = () => {
 
       const response = await axios.post(urlServer + endpoint, user)
       if (response.data) {
-        const token = response.data
+        const { email, token } = response.data
+        console.log(response.data)
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
         setUser({ token })
@@ -63,14 +64,14 @@ const Login = () => {
           <TextField
             label="Correo Electrónico"
             type="email"
-            email="email"
+            name="email"
             onChange={handleSetUsuario}
             fullWidth
           />
           <TextField
             label="Contraseña"
             type="password"
-            email="password"
+            name="password"
             onChange={handleSetUsuario}
             fullWidth
           />

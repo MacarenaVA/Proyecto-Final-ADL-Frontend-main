@@ -12,7 +12,7 @@ function Profile() {
 
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {
-    "Mi Perfil": `<Bienvenido, ${user.email}>.`,
+    "Mi Perfil": `Bienvenido, ${user.email}.`,
     "Modificar Perfil": <ModifyProfile />,
     "Mis Favoritos": <Favorites />,
     "Crear Publicación": <CreateProductPost />,
