@@ -17,11 +17,10 @@ const Login = () => {
   const [user, setUserLocal] = useState({})
   const { login } = useContext(AuthContext)
 
-  const handleSetUsuario = ({ target: { value, email } }) => {
+  const handleSetUsuario = ({ target: { value, name } }) => {
     const field = {}
-    field[email] = value
+    field[name] = value
     setUserLocal({ ...user, ...field })
-    login({ email: value })
   }
   const log_in = async () => {
     const urlServer = "http://localhost:3000"
