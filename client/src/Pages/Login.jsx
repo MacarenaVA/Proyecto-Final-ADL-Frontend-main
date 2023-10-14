@@ -35,6 +35,8 @@ const Login = () => {
       if (response.data) {
         const { email, token } = response.data
         console.log(response.data)
+        console.log("Usuario identificado con éxito") // Agregar esta línea
+
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
         setUser({ token })

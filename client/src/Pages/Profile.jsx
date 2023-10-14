@@ -8,7 +8,7 @@ import CreateProductPost from "./CreateProductPost"
 import MyPosts from "./MyPost"
 
 function Profile() {
-  const { user, logout } = useAuth()
+  const { user, isAuthenticated, logout } = useAuth()
 
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {
@@ -21,6 +21,16 @@ function Profile() {
 
   const handleLinkClick = (link) => {
     setSelectedLink(link)
+  }
+  const handleLogout = () => {
+    if (isAuthenticated) {
+      logout()
+      console.log("Sesión cerrada con éxito")
+    } else {
+      console.log(
+        "No se ha iniciado sesión, por lo tanto no se puede cerrar la sesión."
+      )
+    }
   }
 
   if (!user) {
@@ -46,7 +56,7 @@ function Profile() {
             </li>
           ))}
 
-          <button className="dark-button" onClick={logout}>
+          <button className="dark-button" onClick={handleLogout}>
             Cerrar Sesión
           </button>
         </ul>

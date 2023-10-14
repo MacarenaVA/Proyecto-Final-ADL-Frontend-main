@@ -1,6 +1,6 @@
-import { NavLink, Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 import logo from "../assets/logo.png"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import MyContext from "../context/MyContext"
 import { AuthContext } from "../context/AuthContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -15,7 +15,13 @@ import {
 const Header = () => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
   const { countProducts, allProducts } = useContext(MyContext)
-  const { user } = useContext(AuthContext)
+  const { isAuthenticated, logout } = useContext(AuthContext)
+
+  const handleLogout = () => {
+    logout()
+  }
+
+  useEffect(() => {}, [isAuthenticated])
 
   return (
     <div className="header-container">
@@ -38,11 +44,17 @@ const Header = () => {
             <FontAwesomeIcon icon={faDog} />
             Perros
           </NavLink>
-          {user ? (
-            <NavLink to="/mi-perfil">
-              <FontAwesomeIcon icon={faUser} />
-              Perfil
-            </NavLink>
+          {isAuthenticated ? (
+            <>
+              <NavLink to="/mi-perfil">
+                <FontAwesomeIcon icon={faUser} />
+                Perfil
+              </NavLink>
+              <NavLink to="/" onClick={handleLogout}>
+                <FontAwesomeIcon icon={faUser} />
+                Cerrar Sesión
+              </NavLink>
+            </>
           ) : (
             <>
               <NavLink to="/login">
