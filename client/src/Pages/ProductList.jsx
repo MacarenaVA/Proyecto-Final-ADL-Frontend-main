@@ -1,27 +1,20 @@
-import React, { useContext } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { MyContext } from "../context/MyContext"
+import MyContext from "../context/MyContext"
+import axios from "axios"
 
 const ProductList = () => {
   const chile = new Intl.NumberFormat("es-CL")
-  const { data } = useContext(MyContext)
-  const { allProducts, setAllProducts } = useContext(MyContext)
-  const { countProducts, setCountProducts } = useContext(MyContext)
-  const { total, setTotal } = useContext(MyContext)
+  const { allProducts, setAllProducts, setCountProducts, setTotal } =
+    useContext(MyContext)
+  const [products, setProducts] = useState([]) // Estado para almacenar los productos
 
-  const updateCart = (updatedProducts) => {
-    const newCount = updatedProducts.reduce(
-      (acc, product) => acc + product.qty,
-      0
-    )
-    const newTotal = updatedProducts.reduce(
-      (acc, product) => acc + product.price * product.qty,
-      0
-    )
-    setCountProducts(newCount)
-    setTotal(newTotal)
-    setAllProducts(updatedProducts)
-  }
+  useEffect(() => {
+    // Realiza una solicitud para obtener la lista de productos desde el backend
+    axios.get("http://localhost:3000/products").then((response) => {
+      setProducts(response.data)
+    })
+  }, []) // Se ejecuta solo una vez al cargar el componente
 
   const onAddProduct = (product) => {
     const existingProduct = allProducts.find((item) => item.id === product.id)
@@ -46,12 +39,12 @@ const ProductList = () => {
   return (
     <div className="product-list-container">
       <div className="product-list">
-        {data.map((product) => (
+        {products.map((product) => (
           <div className="product-card" id={product.id} key={product.id}>
             <div className="img-container" onClick={() => handleClick(product)}>
               <img src={product.img} alt={product.name} />
             </div>
-            <h2 onClick={() => showProductDetails(product)}>
+            <h2 onClick={() => handleClick(product)}>
               {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
             </h2>
             <p>{product.description}</p>

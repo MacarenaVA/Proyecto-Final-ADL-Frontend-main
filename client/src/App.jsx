@@ -1,38 +1,25 @@
+import React, { useEffect, useState } from "react"
+import MyContext from "./context/MyContext"
+import { AuthProvider } from "./context/AuthContext"
 import Header from "./components/Header"
 import AppRouter from "./router/AppRouter"
-import { useEffect, useState } from "react"
-import { MyContext } from "./context/MyContext"
-import { AuthProvider } from "./context/AuthContext"
-
-import "./App.css"
 import Footer from "./components/Footer"
 
 function App() {
-  const [data, setData] = useState([])
+  const [productData, setProductData] = useState([])
+  const [userData, setUserData] = useState([])
   const [allProducts, setAllProducts] = useState([])
   const [total, setTotal] = useState(0)
   const [countProducts, setCountProducts] = useState(0)
-
-  useEffect(() => {
-    async function getData() {
-      try {
-        const res = await fetch("../src/data/data.json")
-        const jsonData = await res.json()
-        setData(jsonData)
-      } catch (error) {
-        console.error("Error fetching data:", error)
-      }
-    }
-
-    getData()
-  }, [])
+  const [user, setUser] = useState(null)
 
   return (
     <AuthProvider>
       <MyContext.Provider
         value={{
-          data,
-          setData,
+          user,
+          setUser,
+          userData,
           allProducts,
           setAllProducts,
           total,

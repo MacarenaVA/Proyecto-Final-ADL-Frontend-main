@@ -4,9 +4,10 @@ const router = express.Router()
 require("dotenv").config()
 
 const {
-  registeredUsers,
+  registration,
   obtainUser,
   verifyUser,
+  getProducts,
 } = require("../consultas/consultas")
 const {
   checkCredentialsExist,
@@ -17,23 +18,23 @@ router.get("/", (req, res) => {
   res.send("Hello World")
 })
 
-router.post("/users", checkCredentialsExist, async (req, res) => {
+router.post("/usuarios", checkCredentialsExist, async (req, res) => {
   try {
-    const user = req.body
-    await registeredUsers(user)
-    res.send("Usuario registrado con éxito")
+    const usuarios = req.body
+    await registration(usuarios)
+    res.send("Usuario registrado con éxito!")
   } catch (error) {
     res.status(500).send(error)
   }
 })
 
-router.get("/users", tokenVerification, async (req, res) => {
+router.get("/usuarios", tokenVerification, async (req, res) => {
   try {
     const Authorization = req.header("Authorization")
     const token = Authorization.split("Bearer ")[1]
     const { email } = jwt.decode(token)
-    const user = await obtainUser(email)
-    res.json(user)
+    const usuario = await obtainUser(email)
+    res.json(usuario)
   } catch (error) {
     res.status(500).send(error)
   }
@@ -44,10 +45,16 @@ router.post("/login", async (req, res) => {
     const { email, password } = req.body
     await verifyUser(email, password)
     const token = jwt.sign({ email }, process.env.SECRET)
-    console.log("Token generado:", token)
     res.send(token)
   } catch (error) {
-    console.error(error)
+    res.status(500).send(error)
+  }
+})
+router.get("/products", async (req, res) => {
+  try {
+    const products = await getProducts()
+    res.json(products)
+  } catch (error) {
     res.status(500).send(error)
   }
 })

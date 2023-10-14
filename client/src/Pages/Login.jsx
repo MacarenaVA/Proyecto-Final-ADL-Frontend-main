@@ -14,33 +14,42 @@ import {
 const Login = () => {
   const { setUser } = useContext(AuthContext)
   const navigate = useNavigate()
-  const [user, setLocalUser] = useState({ email: "", password: "" })
+  const [user, setUserLocal] = useState({})
+  const { login } = useContext(AuthContext)
 
-  const handleSetUser = (e) => {
-    const { value, name } = e.target
-    setLocalUser({ ...user, [name]: value })
+  const handleSetUsuario = ({ target: { value, email } }) => {
+    const field = {}
+    field[email] = value
+    setUserLocal({ ...user, ...field })
+    login({ email: value })
   }
-
-  const handleLogin = async () => {
+  const log_in = async () => {
     const urlServer = "http://localhost:3000"
     const endpoint = "/login"
-
+    const { email, password } = user
     try {
-      if (!user.email || !user.password) {
-        return alert("Email y contraseña son obligatorias")
+      if (!email || !password) {
+        return alert("Email y contraseña son obligatorios")
       }
 
-      const response = await axios.post(`${urlServer}${endpoint}`, user)
-      const { data: token } = response
-      alert("Usuario identificado con éxito")
-      localStorage.setItem("token", token)
-      setUser()
-      navigate("/mi-perfil")
+      const response = await axios.post(urlServer + endpoint, user)
+      if (response.data) {
+        const token = response.data
+        alert("Usuario identificado con éxito")
+        localStorage.setItem("token", token)
+        setUser({ token })
+        navigate("/mi-perfil")
+        login({ email })
+      } else {
+        alert("La respuesta del servidor no contiene el token")
+      }
     } catch (error) {
       if (error.response) {
-        alert(`Error: ${error.response.data.message}`)
+        console.log("Error de respuesta:", error.response.data)
+        alert(error.response.data + " 🙁")
       } else {
-        alert("Ocurrió un error al iniciar sesión")
+        console.log("Error general:", error)
+        alert("Ocurrió un error al iniciar sesión 🙁")
       }
     }
   }
@@ -55,21 +64,19 @@ const Login = () => {
           <TextField
             label="Correo Electrónico"
             type="email"
-            name="email"
-            value={user.email}
-            onChange={handleSetUser}
+            email="email"
+            onChange={handleSetUsuario}
             fullWidth
           />
           <TextField
             label="Contraseña"
             type="password"
-            name="password"
-            value={user.password}
-            onChange={handleSetUser}
+            email="password"
+            onChange={handleSetUsuario}
             fullWidth
           />
           <Button
-            onClick={handleLogin}
+            onClick={log_in}
             variant="contained"
             color="primary"
             fullWidth

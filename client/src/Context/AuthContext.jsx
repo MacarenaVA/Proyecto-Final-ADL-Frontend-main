@@ -7,18 +7,18 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState({ email: null })
 
   const login = (userData) => {
     setUser(userData)
   }
 
   const logout = () => {
-    setUser(null)
+    setUser({ email: null })
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, setUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

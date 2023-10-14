@@ -1,19 +1,23 @@
 const pool = require("../db/conexion")
 const bcrypt = require("bcryptjs")
 
-const registeredUsers = async (user) => {
-  let { username, email, password } = user
+const registration = async (usuario) => {
+  let { username, email, password } = usuario
   const passwordEncoded = bcrypt.hashSync(password)
+  password = passwordEncoded
   const values = [username, email, passwordEncoded]
-  const consult = "INSERT INTO users VALUES (DEFAULT, $1, $2, $3)"
+  const consult = `INSERT INTO users VALUES (DEFAULT,$1, $2, $3)`
   await pool.query(consult, values)
 }
 
 const obtainUser = async (email) => {
-  const values = [null, email]
-  const consult = "SELECT * FROM users WHERE email = $2"
+  const values = [email]
+  const consult = `SELECT * FROM users WHERE email = $1`
 
-  const { rows, rowCount } = await pool.query(consult, values)
+  const {
+    rows: [usuario],
+    rowCount,
+  } = await pool.query(consult, values)
 
   if (!rowCount) {
     throw {
@@ -21,34 +25,30 @@ const obtainUser = async (email) => {
       message: "Usuario no encontrado",
     }
   }
-
-  const user = rows[0]
-  delete user.password
-  return user
+  delete usuario.password
+  return usuario
 }
 
 const verifyUser = async (email, password) => {
   const values = [email]
-  const consult = "SELECT * FROM users WHERE email = $1"
+  const consult = `SELECT * FROM users WHERE email = $1`
 
-  const { rows, rowCount } = await pool.query(consult, values)
+  const {
+    rows: [usuario],
+    rowCount,
+  } = await pool.query(consult, values)
 
-  if (rowCount === 0) {
-    throw { code: 401, message: "Email no encontrado" }
-  }
-
-  const user = rows[0]
-  const { password: passwordEncoded } = user
-
+  const { password: passwordEncoded } = usuario
   const correctPassword = bcrypt.compareSync(password, passwordEncoded)
 
-  if (!correctPassword) {
-    throw { code: 401, message: "Contraseña incorrecta" }
-  }
+  if (!correctPassword || !rowCount)
+    throw { code: 401, message: "Contraseña o email es incorrecto" }
 }
 
-module.exports = {
-  registeredUsers,
-  obtainUser,
-  verifyUser,
+const getProducts = async () => {
+  const consult = "SELECT * FROM productos"
+  const { rows } = await pool.query(consult)
+  return rows
 }
+
+module.exports = { registration, obtainUser, verifyUser, getProducts }

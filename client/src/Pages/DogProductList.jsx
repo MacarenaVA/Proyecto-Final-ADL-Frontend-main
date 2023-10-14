@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { MyContext } from "../context/MyContext"
+import MyContext from "../context/MyContext"
 
 const DogsProductList = () => {
   const chile = new Intl.NumberFormat("es-CL")

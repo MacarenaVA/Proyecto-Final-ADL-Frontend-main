@@ -1,7 +1,7 @@
 import { NavLink, Link } from "react-router-dom"
 import logo from "../assets/logo.png"
 import { useContext } from "react"
-import { MyContext } from "../context/MyContext"
+import MyContext from "../context/MyContext"
 import { AuthContext } from "../context/AuthContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {

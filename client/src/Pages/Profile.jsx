@@ -9,9 +9,10 @@ import MyPosts from "./MyPost"
 
 function Profile() {
   const { user, logout } = useAuth()
+
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {
-    "Mi Perfil": `Bienvenido, ${user.username}.`,
+    "Mi Perfil": `<Bienvenido, ${user.email}>.`,
     "Modificar Perfil": <ModifyProfile />,
     "Mis Favoritos": <Favorites />,
     "Crear Publicación": <CreateProductPost />,
