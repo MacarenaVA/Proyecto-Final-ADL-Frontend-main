@@ -16,7 +16,7 @@ const Register = () => {
 
   const registeredUsers = async (usuario) => {
     const urlServer = "http://localhost:3000"
-    const endpoint = "/users"
+    const endpoint = "/usuarios"
     try {
       await axios.post(urlServer + endpoint, usuario)
       alert("Usuario registrado con éxito")

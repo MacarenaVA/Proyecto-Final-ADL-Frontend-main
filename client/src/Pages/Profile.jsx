@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useContext } from "react"
 import { Link, Navigate } from "react-router-dom"
 import { MyContext } from "../context/MyContext"
 import ModifyProfile from "../pages/ModifyProfile"
@@ -8,7 +8,7 @@ import CreateProductPost from "./CreateProductPost"
 import MyPosts from "./MyPost"
 
 function Profile() {
-  const { user, isAuthenticated, logout } = MyContext()
+  const { user, isAuthenticated, logout } = useContext(MyContext) // Use useContext to access the context values
 
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {
