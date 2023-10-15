@@ -1,12 +1,18 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import MyContext from "../context/MyContext"
+import { MyContext } from "../context/MyContext"
 import axios from "axios"
 
 const ProductList = () => {
   const chile = new Intl.NumberFormat("es-CL")
-  const { allProducts, setAllProducts, setCountProducts, setTotal } =
-    useContext(MyContext)
+  const {
+    allProducts,
+    setAllProducts,
+    setCountProducts,
+    setTotal,
+    updateCart,
+  } = useContext(MyContext)
+
   const [products, setProducts] = useState([])
 
   useEffect(() => {

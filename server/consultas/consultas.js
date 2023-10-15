@@ -58,10 +58,23 @@ const getProductByCategory = async (category) => {
   return rows
 }
 
+const getCartProducts = async (userId) => {
+  const query = `
+    SELECT products.product_id, products.product_name, products.product_price, cart.quantity
+    FROM cart
+    JOIN products ON cart.product_id = products.id
+    WHERE cart.user_id = $1
+  `
+  const values = [userId]
+  const { rows } = await pool.query(query, values)
+  return rows
+}
+
 module.exports = {
   registration,
   obtainUser,
   verifyUser,
   getProducts,
   getProductByCategory,
+  getCartProducts,
 }

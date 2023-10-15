@@ -1,5 +1,6 @@
+import React from "react"
 import { Route, Routes } from "react-router-dom"
-import { AuthProvider } from "../context/AuthContext"
+import { MyContextProvider } from "../context/MyContext" // Importa MyContextProvider
 import ProductList from "../pages/ProductList"
 import Cart from "../pages/Cart"
 import DetailProduct from "../pages/DetailProduct"
@@ -16,7 +17,7 @@ import MyPosts from "../pages/MyPost"
 const AppRouter = () => {
   return (
     <>
-      <AuthProvider>
+      <MyContextProvider>
         <Routes>
           <Route path="/" element={<ProductList />} />
           <Route path="/cart" element={<Cart />} />
@@ -37,7 +38,7 @@ const AppRouter = () => {
           <Route path="/crear-publicación" element={<CreateProductPost />} />
           <Route path="/mis-publicaciones" element={<MyPosts />} />
         </Routes>
-      </AuthProvider>
+      </MyContextProvider>
     </>
   )
 }

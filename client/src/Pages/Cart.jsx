@@ -1,7 +1,8 @@
-import React, { useContext } from "react"
-import MyContext from "../context/MyContext"
+import React, { useContext, useEffect, useState } from "react"
+import { MyContext } from "../context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
+import axios from "axios"
 
 const Cart = () => {
   const chile = new Intl.NumberFormat("es-CL")
@@ -12,7 +13,22 @@ const Cart = () => {
     setCountProducts,
     total,
     setTotal,
+    user,
+    updateCart,
   } = useContext(MyContext)
+
+  const [cartProducts, setCartProducts] = useState([])
+
+  useEffect(() => {
+    if (user) {
+      const userId = user.id
+      axios.get(`/cart/${userId}`).then((response) => {
+        setCartProducts(response.data)
+      })
+    } else {
+      setCartProducts(allProducts)
+    }
+  }, [user, allProducts])
 
   const updateProductQuantity = (product, increment) => {
     const updatedProducts = allProducts.map((item) =>
@@ -47,7 +63,7 @@ const Cart = () => {
     <div className="cart-container">
       <div className="cart">
         <div className="cart-l">
-          {allProducts.map((product) => (
+          {cartProducts.map((product) => (
             <div className="cart-card" key={product.id}>
               <div className="card-l">
                 <div className="img-cart">

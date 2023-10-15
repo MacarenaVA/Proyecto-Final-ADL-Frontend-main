@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import { useAuth } from "../context/AuthContext"
+import { MyContext } from "../context/MyContext"
 import { Link, Navigate } from "react-router-dom"
 import "../App.css"
 
 function Favorites() {
-  const { user, logout } = useAuth()
+  const { user, logout } = MyContext()
   const [favorites, setFavorites] = useState([])
   const [newFavorite, setNewFavorite] = useState("")
 

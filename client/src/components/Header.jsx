@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom"
 import logo from "../assets/logo.png"
 import { useContext, useEffect } from "react"
-import MyContext from "../context/MyContext"
-import { AuthContext } from "../context/AuthContext"
+import { MyContext } from "../context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCat,
@@ -14,8 +13,8 @@ import {
 
 const Header = () => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
-  const { countProducts, allProducts } = useContext(MyContext)
-  const { isAuthenticated, logout } = useContext(AuthContext)
+  const { isAuthenticated, logout, countProducts, allProducts } =
+    useContext(MyContext)
 
   const handleLogout = () => {
     logout()

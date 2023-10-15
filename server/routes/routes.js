@@ -9,6 +9,7 @@ const {
   verifyUser,
   getProducts,
   getProductByCategory,
+  getCartProducts,
 } = require("../consultas/consultas")
 const {
   checkCredentialsExist,
@@ -64,7 +65,6 @@ router.get("/products/category/:category", async (req, res) => {
   try {
     const category = req.params.category
     const products = await getProductByCategory(category)
-
     res.json(products)
   } catch (error) {
     console.error("Error al procesar la solicitud:", error)
@@ -73,5 +73,15 @@ router.get("/products/category/:category", async (req, res) => {
   }
 })
 
-module.exports = router
+router.get("/cart/:userId", async (req, res) => {
+  try {
+    const userId = req.params.userId
+    const cartProducts = await getCartProducts(userId)
+    res.json(cartProducts)
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "Error al obtener los productos del carrito de compras" })
+  }
+})
 module.exports = router

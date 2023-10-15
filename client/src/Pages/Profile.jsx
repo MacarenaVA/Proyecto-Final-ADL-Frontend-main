@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { Link, Navigate } from "react-router-dom"
-import { useAuth } from "../context/AuthContext"
+import { MyContext } from "../context/MyContext"
 import ModifyProfile from "../pages/ModifyProfile"
 import Favorites from "../pages/Favorites"
 import "../App.css"
@@ -8,7 +8,7 @@ import CreateProductPost from "./CreateProductPost"
 import MyPosts from "./MyPost"
 
 function Profile() {
-  const { user, isAuthenticated, logout } = useAuth()
+  const { user, isAuthenticated, logout } = MyContext()
 
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {

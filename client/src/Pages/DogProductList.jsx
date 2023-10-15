@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import MyContext from "../context/MyContext"
+import { MyContext } from "../context/MyContext"
 import axios from "axios"
 
 const DogsProductList = () => {

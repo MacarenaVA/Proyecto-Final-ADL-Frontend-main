@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
-import MyContext from "./context/MyContext"
-import { AuthProvider } from "./context/AuthContext"
+import { MyContextProvider } from "./context/MyContext"
 import Header from "./components/Header"
 import AppRouter from "./router/AppRouter"
 import Footer from "./components/Footer"
@@ -14,25 +13,23 @@ function App() {
   const [user, setUser] = useState(null)
 
   return (
-    <AuthProvider>
-      <MyContext.Provider
-        value={{
-          user,
-          setUser,
-          userData,
-          allProducts,
-          setAllProducts,
-          total,
-          setTotal,
-          countProducts,
-          setCountProducts,
-        }}
-      >
-        <Header />
-        <AppRouter />
-        <Footer />
-      </MyContext.Provider>
-    </AuthProvider>
+    <MyContextProvider
+      value={{
+        user,
+        setUser,
+        userData,
+        allProducts,
+        setAllProducts,
+        total,
+        setTotal,
+        countProducts,
+        setCountProducts,
+      }}
+    >
+      <Header />
+      <AppRouter />
+      <Footer />
+    </MyContextProvider>
   )
 }
 

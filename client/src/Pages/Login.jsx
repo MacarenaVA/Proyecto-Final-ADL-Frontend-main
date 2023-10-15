@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { AuthContext } from "../context/AuthContext"
+import { MyContext } from "../context/MyContext"
 import {
   Box,
   Button,
@@ -12,10 +12,10 @@ import {
 } from "@mui/material"
 
 const Login = () => {
-  const { setUser } = useContext(AuthContext)
+  const { setUser } = useContext(MyContext)
   const navigate = useNavigate()
   const [user, setUserLocal] = useState({})
-  const { login } = useContext(AuthContext)
+  const { login } = useContext(MyContext)
 
   const handleSetUsuario = ({ target: { value, name } }) => {
     const field = {}

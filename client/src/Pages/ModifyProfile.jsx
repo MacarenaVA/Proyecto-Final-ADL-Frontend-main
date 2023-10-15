@@ -1,10 +1,10 @@
 import React, { useState } from "react"
-import { useAuth } from "../context/AuthContext"
+import { MyContext } from "../context/MyContext"
 import { Link } from "react-router-dom"
 import "../App.css"
 
 function ModifyProfile() {
-  const { user, logout } = useAuth()
+  const { user, logout } = MyContext()
   const [formData, setFormData] = useState({
     username: user.username,
     email: user.email,
