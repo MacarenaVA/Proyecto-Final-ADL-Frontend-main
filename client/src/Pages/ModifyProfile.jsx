@@ -1,10 +1,10 @@
-import React, { useState } from "react"
-import { MyContext } from "../context/MyContext"
+import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
-import "../App.css"
+import Axios from "axios"
+import { MyContext } from "../context/MyContext"
 
 function ModifyProfile() {
-  const { user, logout } = MyContext()
+  const { user, updateUser, logout } = useContext(MyContext)
   const [formData, setFormData] = useState({
     username: user.username,
     email: user.email,
@@ -16,9 +16,30 @@ function ModifyProfile() {
     setFormData({ ...formData, [name]: value })
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    console.log("Datos de perfil actualizados:", formData)
+
+    try {
+      const response = await Axios.put(
+        "http://localhost:3000/api/profile",
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+
+      if (response.status === 200) {
+        const updatedUser = { ...user, ...formData }
+        updateUser(updatedUser)
+        console.log("Perfil actualizado con éxito.")
+      } else {
+        console.error("Error al actualizar el perfil.")
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error)
+    }
   }
 
   return (

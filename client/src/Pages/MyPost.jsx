@@ -1,15 +1,29 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { MyContext } from "../context/MyContext"
 import { Link, Navigate } from "react-router-dom"
+import Axios from "axios"
 import "../App.css"
 
 function MyPosts() {
-  const { user, logout } = MyContext()
+  const { user, logout } = useContext(MyContext)
   const [userPosts, setUserPosts] = useState([])
 
-  const fetchUserPosts = () => {
-    const dummyUserPosts = []
-    setUserPosts(dummyUserPosts)
+  const fetchUserPosts = async () => {
+    try {
+      const response = await Axios.get("http://localhost:3000/api/user-posts", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+
+      if (response.status === 200) {
+        setUserPosts(response.data)
+      } else {
+        console.error("Error al obtener las publicaciones del usuario.")
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud:", error)
+    }
   }
 
   useEffect(() => {

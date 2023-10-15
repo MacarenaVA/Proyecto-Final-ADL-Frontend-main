@@ -1,12 +1,40 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { MyContext } from "../context/MyContext"
 import { Link, Navigate } from "react-router-dom"
-import "../App.css"
+import Axios from "axios" // Importa Axios
 
 function Favorites() {
-  const { user, logout } = MyContext()
+  const { user, logout } = useContext(MyContext)
   const [favorites, setFavorites] = useState([])
   const [newFavorite, setNewFavorite] = useState("")
+
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      try {
+        // Realiza una solicitud GET al servidor para obtener la lista de favoritos
+        const response = await Axios.get(
+          "http://localhost:3000/api/favorites",
+          {
+            headers: {
+              Authorization: `Bearer ${user.token}`, // Asegúrate de incluir el token de autenticación
+            },
+          }
+        )
+
+        if (response.status === 200) {
+          setFavorites(response.data.favorites) // Actualiza la lista de favoritos con la respuesta del servidor
+        } else {
+          console.error("Error al obtener la lista de favoritos.")
+        }
+      } catch (error) {
+        console.error("Error al obtener la lista de favoritos:", error)
+      }
+    }
+
+    if (user) {
+      fetchFavorites() // Llama a la función para obtener los favoritos solo si el usuario está autenticado
+    }
+  }, [user])
 
   const addFavorite = () => {
     if (newFavorite.trim() !== "") {

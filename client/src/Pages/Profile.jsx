@@ -8,8 +8,7 @@ import CreateProductPost from "./CreateProductPost"
 import MyPosts from "./MyPost"
 
 function Profile() {
-  const { user, isAuthenticated, logout } = useContext(MyContext) // Use useContext to access the context values
-
+  const { user, isAuthenticated, logout } = useContext(MyContext)
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {
     "Mi Perfil": `Bienvenido, ${user.email}.`,

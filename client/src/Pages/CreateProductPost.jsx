@@ -16,6 +16,8 @@ function CreateProductPost() {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
 
+  const [error, setError] = useState(null) // Para manejar errores
+
   const handleProductChange = (e) => {
     const { name, value } = e.target
     setProduct({ ...product, [name]: value })
@@ -38,7 +40,7 @@ function CreateProductPost() {
       formData.append("image", image)
 
       const response = await Axios.post(
-        "http://localhost:3000/usuarios",
+        "http://localhost:3000/api/productos",
         formData
       )
 
@@ -48,7 +50,7 @@ function CreateProductPost() {
         console.error("Error al crear la publicación.")
       }
     } catch (error) {
-      console.error("Error al enviar la solicitud:", error)
+      setError("Error al enviar la solicitud: " + error.message)
     } finally {
       setIsSubmitting(false)
     }
@@ -164,6 +166,7 @@ function CreateProductPost() {
           <button type="submit" className="dark-button" disabled={isSubmitting}>
             {isSubmitting ? "Enviando..." : "Crear Publicación"}
           </button>
+          {error && <p className="error-message">{error}</p>}
         </form>
       </div>
     </div>
