@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { MyContext } from "../context/MyContext"
 import { Link, Navigate } from "react-router-dom"
+import Axios from "axios"
 import "../App.css"
 
 function CreateProductPost() {
-  const { user, logout } = MyContext()
+  const { user, logout } = useContext(MyContext)
   const [product, setProduct] = useState({
     title: "",
     description: "",
@@ -36,12 +37,12 @@ function CreateProductPost() {
       formData.append("price", product.price)
       formData.append("image", image)
 
-      const response = await fetch("URL_DE_TU_API_PARA_CREAR_PUBLICACIONES", {
-        method: "POST",
-        body: formData,
-      })
+      const response = await Axios.post(
+        "http://localhost:3000/usuarios",
+        formData
+      )
 
-      if (response.ok) {
+      if (response.status === 201) {
         console.log("La publicación se creó con éxito.")
       } else {
         console.error("Error al crear la publicación.")
@@ -52,6 +53,23 @@ function CreateProductPost() {
       setIsSubmitting(false)
     }
   }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await Axios.get("http://localhost:3000/usuarios")
+        if (response.status === 200) {
+          const data = response.data
+        } else {
+          console.error("Error fetching data from the API")
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   if (!user) {
     return <Navigate to="/login" />
