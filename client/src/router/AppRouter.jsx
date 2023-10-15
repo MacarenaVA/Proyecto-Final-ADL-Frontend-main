@@ -25,7 +25,10 @@ const AppRouter = () => {
             path="/products/category/gatos"
             element={<CatsProductList />}
           />
-          <Route path="/dogs" element={<DogsProductList />} />
+          <Route
+            path="/products/category/Perro"
+            element={<DogsProductList />}
+          />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/mi-perfil" element={<Profile />} />

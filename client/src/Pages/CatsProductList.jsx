@@ -17,7 +17,7 @@ const CatsProductList = () => {
 
   useEffect(() => {
     axios
-      .get("/products/category/gatos")
+      .get("http://localhost:3000/products/category/gatos")
       .then((response) => {
         setCatsProducts(response.data)
       })

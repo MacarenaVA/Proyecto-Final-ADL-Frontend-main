@@ -15,7 +15,6 @@ export default function Footer() {
         component="footer"
         sx={{
           mt: "2rem",
-          bgcolor: "primary",
           height: "auto",
           pb: "3rem",
           color: "black",

@@ -64,9 +64,6 @@ router.get("/products/category/:category", async (req, res) => {
   try {
     const category = req.params.category
     const products = await getProductByCategory(category)
-    console.log(
-      `Recibida solicitud para buscar productos de la categoría: ${category}`
-    )
 
     res.json(products)
   } catch (error) {

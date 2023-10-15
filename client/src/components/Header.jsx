@@ -40,7 +40,7 @@ const Header = () => {
             <FontAwesomeIcon icon={faCat} />
             Gatos
           </NavLink>
-          <NavLink to="/dogs">
+          <NavLink to="/products/category/Perro">
             <FontAwesomeIcon icon={faDog} />
             Perros
           </NavLink>
