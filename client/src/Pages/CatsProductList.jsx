@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import MyContext from "../context/MyContext"
+import axios from "axios"
 
 const CatsProductList = () => {
-  const chile = new Intl.NumberFormat("es-CL")
+  const [catsProducts, setCatsProducts] = useState([])
   const {
     allProducts,
     setAllProducts,
@@ -11,12 +12,19 @@ const CatsProductList = () => {
     setCountProducts,
     total,
     setTotal,
-    data,
   } = useContext(MyContext)
+  const navigate = useNavigate()
 
-  const catsProducts = data.filter((product) => product.categoria === "gatos")
-
-  const [selectedProduct, setSelectedProduct] = useState(null)
+  useEffect(() => {
+    axios
+      .get("/products/category/gatos")
+      .then((response) => {
+        setCatsProducts(response.data)
+      })
+      .catch((error) => {
+        console.error(error)
+      })
+  }, [])
 
   const onAddProduct = (product) => {
     const existingProduct = allProducts.find((item) => item.id === product.id)
@@ -25,20 +33,21 @@ const CatsProductList = () => {
       const updatedProducts = allProducts.map((item) =>
         item.id === product.id ? { ...item, qty: item.qty + 1 } : item
       )
-      setTotal(total + product.price)
-      setCountProducts(countProducts + 1)
       setAllProducts(updatedProducts)
     } else {
       product.qty = 1
-      setTotal(total + product.price)
-      setCountProducts(countProducts + 1)
       setAllProducts([...allProducts, product])
     }
+
+    setCountProducts(countProducts + 1)
+    setTotal(total + product.price)
   }
-  const navigate = useNavigate()
+
   const handleClick = (product) => {
     navigate(`/${product.id}`)
   }
+
+  const chile = new Intl.NumberFormat("es-CL")
 
   return (
     <div className="product-list-container">

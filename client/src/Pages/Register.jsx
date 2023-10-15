@@ -76,7 +76,6 @@ const Register = () => {
           <Button
             type="submit"
             variant="contained"
-            color="primary"
             fullWidth
             size="large"
             style={{ marginTop: "20px" }}

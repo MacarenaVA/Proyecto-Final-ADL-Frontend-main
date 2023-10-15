@@ -35,7 +35,7 @@ const Login = () => {
       if (response.data) {
         const { email, token } = response.data
         console.log(response.data)
-        console.log("Usuario identificado con éxito") // Agregar esta línea
+        console.log("Usuario identificado con éxito")
 
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
@@ -77,12 +77,7 @@ const Login = () => {
             onChange={handleSetUsuario}
             fullWidth
           />
-          <Button
-            onClick={log_in}
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
+          <Button onClick={log_in} variant="contained" fullWidth>
             Iniciar Sesión
           </Button>
         </Box>

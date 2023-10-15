@@ -7,14 +7,13 @@ const ProductList = () => {
   const chile = new Intl.NumberFormat("es-CL")
   const { allProducts, setAllProducts, setCountProducts, setTotal } =
     useContext(MyContext)
-  const [products, setProducts] = useState([]) // Estado para almacenar los productos
+  const [products, setProducts] = useState([])
 
   useEffect(() => {
-    // Realiza una solicitud para obtener la lista de productos desde el backend
     axios.get("http://localhost:3000/products").then((response) => {
       setProducts(response.data)
     })
-  }, []) // Se ejecuta solo una vez al cargar el componente
+  }, [])
 
   const onAddProduct = (product) => {
     const existingProduct = allProducts.find((item) => item.id === product.id)

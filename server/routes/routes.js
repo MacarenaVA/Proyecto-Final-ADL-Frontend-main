@@ -8,6 +8,7 @@ const {
   obtainUser,
   verifyUser,
   getProducts,
+  getProductByCategory,
 } = require("../consultas/consultas")
 const {
   checkCredentialsExist,
@@ -59,4 +60,21 @@ router.get("/products", async (req, res) => {
   }
 })
 
+router.get("/products/category/:category", async (req, res) => {
+  try {
+    const category = req.params.category
+    const products = await getProductByCategory(category)
+    console.log(
+      `Recibida solicitud para buscar productos de la categoría: ${category}`
+    )
+
+    res.json(products)
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error)
+
+    res.status(500).send(error)
+  }
+})
+
+module.exports = router
 module.exports = router

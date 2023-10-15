@@ -46,9 +46,22 @@ const verifyUser = async (email, password) => {
 }
 
 const getProducts = async () => {
-  const consult = "SELECT * FROM productos"
+  const consult = `SELECT * FROM productos`
   const { rows } = await pool.query(consult)
   return rows
 }
 
-module.exports = { registration, obtainUser, verifyUser, getProducts }
+const getProductByCategory = async (category) => {
+  const query = `SELECT * FROM productos WHERE categoria = $1`
+  const values = [category]
+  const { rows } = await pool.query(query, values)
+  return rows
+}
+
+module.exports = {
+  registration,
+  obtainUser,
+  verifyUser,
+  getProducts,
+  getProductByCategory,
+}
