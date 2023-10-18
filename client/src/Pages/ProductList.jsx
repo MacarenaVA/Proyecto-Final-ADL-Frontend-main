@@ -1,80 +1,102 @@
-import React, { useContext, useState, useEffect } from "react"
+import React, { useContext, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { MyContext } from "../context/MyContext"
 import axios from "axios"
 
 const ProductList = () => {
   const chile = new Intl.NumberFormat("es-CL")
-  const { allProducts, updateCart } = useContext(MyContext)
-  const [products, setProducts] = useState([])
+  const {
+    allProducts,
+    setAllProducts,
+    cartProducts,
+    setCartProducts,
+    setCountProducts,
+    setTotal,
+  } = useContext(MyContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    // Manejo de errores en la solicitud de productos
     axios
       .get("http://localhost:3000/products")
       .then((response) => {
-        setProducts(response.data)
+        setAllProducts(response.data)
       })
       .catch((error) => {
         console.error("Error al cargar productos:", error)
-        // Puedes manejar el error de alguna manera, por ejemplo, mostrar un mensaje al usuario.
       })
-  }, [])
+  }, [setAllProducts])
 
-  const onAddProduct = (product) => {
-    const existingProduct = allProducts.find((item) => item.id === product.id)
-
-    if (existingProduct) {
-      const updatedProducts = allProducts.map((item) =>
-        item.id === product.id ? { ...item, qty: item.qty + 1 } : item
-      )
-      updateCart(updatedProducts)
-    } else {
-      product.qty = 1
-      const updatedProducts = [...allProducts, product]
-      updateCart(updatedProducts)
-    }
+  const handleClick = (product) => {
+    navigate(`${product.id}`)
   }
 
-  const onDeleteProduct = (product) => {
-    const updatedProducts = allProducts.map((item) =>
-      item.id === product.id
-        ? { ...item, qty: Math.max(item.qty - 1, 0) }
-        : item
-    )
+  const onAddProduct = (product) => {
+    const productInCart = cartProducts.find((item) => item.id === product.id)
 
-    // Marcar productos que están en el carrito
-    const results = updatedProducts.map((item) =>
-      item.qty > 0 ? { ...item, inCart: true } : { ...item, inCart: false }
-    )
+    if (productInCart) {
+      const updatedProductInCart = {
+        ...productInCart,
+        qty: productInCart.qty + 1,
+      }
+      const updatedCartProducts = cartProducts.map((item) =>
+        item.id === product.id ? updatedProductInCart : item
+      )
 
-    updateCart(results)
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    } else {
+      product.qty = 1
+      const updatedCartProducts = [...cartProducts, product]
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    }
+
+    console.log("Producto agregado al carrito:", product)
   }
 
   return (
     <div className="product-list-container">
       <div className="product-list">
-        {products.map((product) => (
-          <div className="product-card" id={product.id} key={product.id}>
-            <div className="img-container" onClick={() => handleClick(product)}>
-              <img src={product.img} alt={product.name} />
-            </div>
-            <h2 onClick={() => handleClick(product)}>
-              {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
-            </h2>
-            <p>{product.description}</p>
-            <button onClick={() => onAddProduct(product)}>
-              {product.inCart
-                ? "Añadido"
-                : `Agregar al Carrito - ${chile.format(product.price)}`}
-            </button>
-            {product.inCart && (
-              <button onClick={() => onDeleteProduct(product)}>
-                Eliminar del Carrito
+        {Array.isArray(allProducts) &&
+          allProducts.map((product, index) => (
+            <div className="product-card" key={index}>
+              <div className="img-container">
+                <img src={product.img} alt={product.name} />
+              </div>
+              <h2 onClick={() => handleClick(product)}>
+                {product.name
+                  ? product.name.charAt(0).toUpperCase() + product.name.slice(1)
+                  : "No Name"}
+              </h2>
+              <p>{product.description}</p>
+              <button onClick={() => onAddProduct(product)}>
+                Agregar al Carrito - {chile.format(product.price)}
               </button>
-            )}
-          </div>
-        ))}
+            </div>
+          ))}
       </div>
     </div>
   )

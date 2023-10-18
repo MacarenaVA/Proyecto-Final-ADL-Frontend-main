@@ -11,18 +11,18 @@ function Favorites() {
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
-        // Realiza una solicitud GET al servidor para obtener la lista de favoritos
         const response = await Axios.get(
           "http://localhost:3000/api/favorites",
           {
             headers: {
-              Authorization: `Bearer ${user.token}`, // Asegúrate de incluir el token de autenticación
+              Authorization: `Bearer ${user.token}`,
+              n,
             },
           }
         )
 
         if (response.status === 200) {
-          setFavorites(response.data.favorites) // Actualiza la lista de favoritos con la respuesta del servidor
+          setFavorites(response.data.favorites)
         } else {
           console.error("Error al obtener la lista de favoritos.")
         }
@@ -32,7 +32,7 @@ function Favorites() {
     }
 
     if (user) {
-      fetchFavorites() // Llama a la función para obtener los favoritos solo si el usuario está autenticado
+      fetchFavorites()
     }
   }, [user])
 
@@ -73,7 +73,7 @@ function Favorites() {
             </Link>
           </li>
           <li>
-            <Link to="/mis-favoritos" className="profile-link active">
+            <Link to="/mis-favoritos" className="profile-link">
               Mis Favoritos
             </Link>
           </li>

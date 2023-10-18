@@ -10,11 +10,11 @@ const DetailProduct = () => {
     setCountProducts,
     total,
     setTotal,
-    data,
   } = useContext(MyContext)
 
   const { id } = useParams()
-  const product = data.find((product) => product.id === parseInt(id))
+  const product = allProducts.find((product) => product.id === parseInt(id))
+  console.log("Productos:", allProducts)
 
   if (!product) {
     return <div>Producto no encontrado.</div>

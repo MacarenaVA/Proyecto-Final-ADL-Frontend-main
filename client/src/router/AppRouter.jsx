@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
-import { MyContextProvider } from "../context/MyContext" // Importa MyContextProvider
+import { MyContextProvider } from "../context/MyContext"
 import ProductList from "../pages/ProductList"
 import Cart from "../pages/Cart"
 import DetailProduct from "../pages/DetailProduct"
@@ -21,7 +21,7 @@ const AppRouter = () => {
         <Routes>
           <Route path="/" element={<ProductList />} />
           <Route path="/cart" element={<Cart />} />
-          <Route path="/:id" element={<DetailProduct />} />
+          <Route path=":id" element={<DetailProduct />} />
           <Route
             path="/products/category/gatos"
             element={<CatsProductList />}

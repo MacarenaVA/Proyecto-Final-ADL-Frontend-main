@@ -4,12 +4,15 @@ const router = express.Router()
 require("dotenv").config()
 
 const {
+  getUserProducts,
   registration,
   obtainUser,
   verifyUser,
   getProducts,
   getProductByCategory,
   getCartProducts,
+  createProduct,
+  allUsers,
 } = require("../consultas/consultas")
 const {
   checkCredentialsExist,
@@ -42,22 +45,59 @@ router.get("/usuarios", tokenVerification, async (req, res) => {
   }
 })
 
-router.post("/login", async (req, res) => {
+router.get("/todos", async (req, res) => {
   try {
-    const { email, password } = req.body
-    await verifyUser(email, password)
-    const token = jwt.sign({ email }, process.env.SECRET)
-    res.send({ email, token })
+    const usuarios = await allUsers()
+    res.json(usuarios)
   } catch (error) {
     res.status(500).send(error)
   }
 })
+
+router.post("/login", async (req, res) => {
+  try {
+    const { email, password } = req.body
+    const userId = await verifyUser(email, password)
+
+    const token = jwt.sign({ email, id: userId }, process.env.SECRET)
+
+    res.json({ email, token, id: userId })
+  } catch (error) {
+    res
+      .status(error.code || 500)
+      .json({ message: error.message || "Error en el servidor" })
+  }
+})
+
 router.get("/products", async (req, res) => {
   try {
     const products = await getProducts()
     res.json(products)
   } catch (error) {
     res.status(500).send(error)
+  }
+})
+
+router.post("/products", async (req, res) => {
+  try {
+    const productos = req.body
+    await createProduct(productos)
+    res.send("Producto Agregado con Éxito")
+  } catch (error) {
+    res.status(500).send(error)
+  }
+})
+
+router.get("/user-posts/:user_id", async (req, res) => {
+  try {
+    const user_id = req.params.user_id
+    const userProducts = await getUserProducts(user_id)
+    res.json(userProducts)
+  } catch (error) {
+    console.error(error)
+    res
+      .status(500)
+      .json({ message: "Error al obtener las publicaciones del usuario" })
   }
 })
 
@@ -73,7 +113,23 @@ router.get("/products/category/:category", async (req, res) => {
   }
 })
 
-router.get("/cart/:userId", async (req, res) => {
+router.get("/:id", async (req, res) => {
+  try {
+    const productId = req.params.id
+    const product = await obtainProductById(productId)
+
+    if (product) {
+      res.json(product)
+    } else {
+      res.status(404).json({ message: "Producto no encontrado" })
+    }
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ error: "Error al obtener el producto" })
+  }
+})
+
+router.get("/cart", async (req, res) => {
   try {
     const userId = req.params.userId
     const cartProducts = await getCartProducts(userId)

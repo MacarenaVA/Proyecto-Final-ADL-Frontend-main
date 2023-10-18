@@ -1,36 +1,24 @@
-import React, { useContext, useEffect, useState } from "react"
+import React, { useContext } from "react"
 import { MyContext } from "../context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
-import axios from "axios"
 
 const Cart = () => {
-  const chile = new Intl.NumberFormat("es-CL")
-  const { allProducts, updateCart, countProducts, total, user } =
+  const { cartProducts, updateCart, countProducts, total } =
     useContext(MyContext)
 
-  const [cartProducts, setCartProducts] = useState([])
-
-  useEffect(() => {
-    if (user && user.id) {
-      const userId = user.id
-      axios.get(`/cart/${userId}`).then((response) => {
-        setCartProducts(response.data)
-      })
-    } else {
-      setCartProducts(allProducts)
-    }
-  }, [user, allProducts])
-
   const updateProductQuantity = (product, increment) => {
+    console.log("Incremento:", increment)
     const updatedProducts = cartProducts.map((item) => {
       if (item.id === product.id) {
         const newQty = Math.max(item.qty + increment, 0)
+        console.log("Nueva cantidad:", newQty)
         return { ...item, qty: newQty }
       }
       return item
     })
 
+    console.log("Productos actualizados:", updatedProducts)
     updateCart(updatedProducts)
   }
 
@@ -46,6 +34,8 @@ const Cart = () => {
     updateCart([])
   }
 
+  const chile = new Intl.NumberFormat("es-CL")
+
   return (
     <div className="cart-container">
       <div className="cart">
@@ -59,7 +49,7 @@ const Cart = () => {
                   </div>
                   <div className="title-total">
                     <h2>{product.name}</h2>
-                    <p>${chile.format(product.price)}</p>
+                    <p>${product.price}</p>
                   </div>
                 </div>
                 <div className="card-r">
@@ -74,9 +64,9 @@ const Cart = () => {
                     className="fa-plus"
                     onClick={() => updateProductQuantity(product, 1)}
                   />
-                  <p className="subtotal">
-                    ${chile.format(product.price * product.qty)}
-                  </p>
+                  {console.log("Precio del producto:", product.price)}
+                  {console.log("Cantidad del producto:", product.qty)}
+                  <p className="subtotal"> $ {product.price * product.qty}</p>
                   <button
                     className="remove-button"
                     onClick={() => onDeleteProduct(product)}
@@ -92,7 +82,7 @@ const Cart = () => {
             </div>
           )}
           {cartProducts.length > 0 && (
-            <button className="delete-cart" onClick={() => onDeleteCart()}>
+            <button className="delete-cart" onClick={onDeleteCart}>
               Vaciar Carrito
             </button>
           )}

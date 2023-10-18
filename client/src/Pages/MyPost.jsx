@@ -1,20 +1,29 @@
 import React, { useState, useEffect, useContext } from "react"
 import { MyContext } from "../context/MyContext"
 import { Link, Navigate } from "react-router-dom"
-import Axios from "axios"
+import axios from "axios"
 import "../App.css"
 
 function MyPosts() {
   const { user, logout } = useContext(MyContext)
   const [userPosts, setUserPosts] = useState([])
+  const [user_id, setUser_id] = useState(null)
+
+  useEffect(() => {
+    if (user) {
+      setUser_id(user.id)
+    }
+  }, [user])
 
   const fetchUserPosts = async () => {
+    if (!user_id) {
+      return
+    }
+
     try {
-      const response = await Axios.get("http://localhost:3000/api/user-posts", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      })
+      const response = await axios.get(
+        `http://localhost:3000/user-posts/${user_id}`
+      )
 
       if (response.status === 200) {
         setUserPosts(response.data)
@@ -28,7 +37,7 @@ function MyPosts() {
 
   useEffect(() => {
     fetchUserPosts()
-  }, [])
+  }, [user_id])
 
   if (!user) {
     return <Navigate to="/login" />
@@ -44,7 +53,7 @@ function MyPosts() {
         </h1>
         <ul className="profile-links">
           <li>
-            <Link to="/mi-perfil" className="profile-link">
+            <Link to="/profile" className="profile-link">
               Mi Perfil
             </Link>
           </li>
@@ -54,7 +63,7 @@ function MyPosts() {
             </Link>
           </li>
           <li>
-            <Link to="/mis-favoritos" className="profile-link active">
+            <Link to="/mis-favoritos" className="profile-link">
               Mis Favoritos
             </Link>
           </li>
@@ -64,7 +73,7 @@ function MyPosts() {
             </Link>
           </li>
           <li>
-            <Link to="/mis-publicaciones" className="profile-link">
+            <Link to="/mis-publicaciones" className="profile-link active">
               Mis Publicaciones
             </Link>
           </li>
@@ -82,8 +91,12 @@ function MyPosts() {
           <ul>
             {userPosts.map((post) => (
               <li key={post.id}>
-                <h2>{post.title}</h2>
-                <p>{post.content}</p>
+                <Link to={`/${post.id}`} className="product-link">
+                  <h2>{post.name}</h2>
+                </Link>
+                <p>{post.description}</p>
+                <p>Precio: {post.price}</p>
+                <img src={post.image} alt={post.name} />
               </li>
             ))}
           </ul>

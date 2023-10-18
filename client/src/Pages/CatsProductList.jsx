@@ -5,14 +5,8 @@ import axios from "axios"
 
 const CatsProductList = () => {
   const [catsProducts, setCatsProducts] = useState([])
-  const {
-    allProducts,
-    setAllProducts,
-    countProducts,
-    setCountProducts,
-    total,
-    setTotal,
-  } = useContext(MyContext)
+  const { setCountProducts, setTotal, cartProducts, setCartProducts } =
+    useContext(MyContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -26,25 +20,55 @@ const CatsProductList = () => {
       })
   }, [])
 
-  const onAddProduct = (product) => {
-    const existingProduct = allProducts.find((item) => item.id === product.id)
-
-    if (existingProduct) {
-      const updatedProducts = allProducts.map((item) =>
-        item.id === product.id ? { ...item, qty: item.qty + 1 } : item
-      )
-      setAllProducts(updatedProducts)
-    } else {
-      product.qty = 1
-      setAllProducts([...allProducts, product])
-    }
-
-    setCountProducts(countProducts + 1)
-    setTotal(total + product.price)
-  }
-
   const handleClick = (product) => {
     navigate(`/${product.id}`)
+  }
+
+  const onAddProduct = (product) => {
+    const productInCart = cartProducts.find((item) => item.id === product.id)
+
+    if (productInCart) {
+      const updatedProductInCart = {
+        ...productInCart,
+        qty: productInCart.qty + 1,
+      }
+      const updatedCartProducts = cartProducts.map((item) =>
+        item.id === product.id ? updatedProductInCart : item
+      )
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    } else {
+      product.qty = 1
+      const updatedCartProducts = [...cartProducts, product]
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    }
+
+    console.log("Producto agregado al carrito:", product)
   }
 
   const chile = new Intl.NumberFormat("es-CL")

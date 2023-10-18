@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react"
 import { MyContext } from "../context/MyContext"
 import { Link, Navigate } from "react-router-dom"
-import Axios from "axios"
+import axios from "axios"
 import "../App.css"
 
 function CreateProductPost() {
@@ -10,25 +10,21 @@ function CreateProductPost() {
     title: "",
     description: "",
     price: "",
+    stock: "",
+    categoria: "",
+    img: "",
+    user_id: user.id,
   })
 
-  const [image, setImage] = useState(null)
-
   const [isSubmitting, setIsSubmitting] = useState(false)
-
-  const [error, setError] = useState(null) // Para manejar errores
 
   const handleProductChange = (e) => {
     const { name, value } = e.target
     setProduct({ ...product, [name]: value })
   }
 
-  const handleImageChange = (e) => {
-    const selectedImage = e.target.files[0]
-    setImage(selectedImage)
-  }
-
   const handleSubmit = async (e) => {
+    console.log(user.id)
     e.preventDefault()
     setIsSubmitting(true)
 
@@ -37,41 +33,26 @@ function CreateProductPost() {
       formData.append("title", product.title)
       formData.append("description", product.description)
       formData.append("price", product.price)
-      formData.append("image", image)
+      formData.append("stock", product.stock)
+      formData.append("categoria", product.categoria)
+      formData.append("image", product.img)
+      formData.append("user_id", user.user_id)
 
-      const response = await Axios.post(
-        "http://localhost:3000/api/productos",
-        formData
-      )
+      const urlServer = "http://localhost:3000"
+      const endpoint = "/products"
+      const response = await axios.post(urlServer + endpoint, product)
 
-      if (response.status === 201) {
+      if (response.status === 200) {
         console.log("La publicación se creó con éxito.")
       } else {
         console.error("Error al crear la publicación.")
       }
     } catch (error) {
-      setError("Error al enviar la solicitud: " + error.message)
+      console.log("Error al enviar la solicitud: " + error.message)
     } finally {
       setIsSubmitting(false)
     }
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Axios.get("http://localhost:3000/usuarios")
-        if (response.status === 200) {
-          const data = response.data
-        } else {
-          console.error("Error fetching data from the API")
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error)
-      }
-    }
-
-    fetchData()
-  }, [])
 
   if (!user) {
     return <Navigate to="/login" />
@@ -153,20 +134,41 @@ function CreateProductPost() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="image">Imagen:</label>
+            <label htmlFor="stock">Stock:</label>
             <input
-              type="file"
-              id="image"
-              name="image"
-              accept="image/*"
-              onChange={handleImageChange}
+              type="number"
+              id="stock"
+              name="stock"
+              value={product.stock}
+              onChange={handleProductChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="categoria">Categoria (Perro o gato):</label>
+            <input
+              type="text"
+              id="categoria"
+              name="categoria"
+              value={product.categoria}
+              onChange={handleProductChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="img">Imagen:</label>
+            <input
+              type="text"
+              id="img"
+              name="img"
+              value={product.img}
+              onChange={handleProductChange}
               required
             />
           </div>
           <button type="submit" className="dark-button" disabled={isSubmitting}>
             {isSubmitting ? "Enviando..." : "Crear Publicación"}
           </button>
-          {error && <p className="error-message">{error}</p>}
         </form>
       </div>
     </div>

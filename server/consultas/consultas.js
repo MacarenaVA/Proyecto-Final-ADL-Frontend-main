@@ -29,25 +29,61 @@ const obtainUser = async (email) => {
   return usuario
 }
 
+const allUsers = async () => {
+  const consult = `SELECT * FROM users`
+  const { rows } = await pool.query(consult)
+  return rows
+}
+
+const getUserProducts = async (user_id) => {
+  const query = `SELECT * FROM productos WHERE user_id = $1`
+  const values = [user_id]
+  const { rows } = await pool.query(query, values)
+  return rows
+}
+
 const verifyUser = async (email, password) => {
   const values = [email]
-  const consult = `SELECT * FROM users WHERE email = $1`
+  const consult = ` SELECT user_id, password FROM users WHERE email = $1`
 
   const {
     rows: [usuario],
     rowCount,
   } = await pool.query(consult, values)
 
-  const { password: passwordEncoded } = usuario
+  if (!rowCount) {
+    throw {
+      code: 404,
+      message: "Usuario no encontrado",
+    }
+  }
+
+  const { user_id, password: passwordEncoded } = usuario
   const correctPassword = bcrypt.compareSync(password, passwordEncoded)
 
-  if (!correctPassword || !rowCount)
+  if (!correctPassword || !rowCount) {
     throw { code: 401, message: "Contraseña o email es incorrecto" }
+  }
+  return user_id
 }
 
 const getProducts = async () => {
   const consult = `SELECT * FROM productos`
   const { rows } = await pool.query(consult)
+  return rows
+}
+
+const createProduct = async (product) => {
+  let { img, title, description, price, categoria, stock, user_id } = product
+  const values = [img, title, description, price, categoria, stock, user_id]
+  const consult = `INSERT INTO productos VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7)`
+  await pool.query(consult, values)
+}
+
+const postId = async (id) => {
+  const values = [id]
+  const consult = `select * from productos where id = ($1)`
+  const { rows } = await pool.query(consult, values)
   return rows
 }
 
@@ -77,4 +113,8 @@ module.exports = {
   getProducts,
   getProductByCategory,
   getCartProducts,
+  createProduct,
+  postId,
+  allUsers,
+  getUserProducts,
 }

@@ -14,34 +14,34 @@ import {
 const Login = () => {
   const { setUser } = useContext(MyContext)
   const navigate = useNavigate()
-  const [user, setUserLocal] = useState({})
+  const [formData, setFormData] = useState({})
   const { login } = useContext(MyContext)
 
   const handleSetUsuario = ({ target: { value, name } }) => {
     const field = {}
     field[name] = value
-    setUserLocal({ ...user, ...field })
+    setFormData({ ...formData, ...field })
   }
   const log_in = async () => {
     const urlServer = "http://localhost:3000"
     const endpoint = "/login"
-    const { email, password } = user
+    const { email, password } = formData
     try {
       if (!email || !password) {
         return alert("Email y contraseña son obligatorios")
       }
 
-      const response = await axios.post(urlServer + endpoint, user)
+      const response = await axios.post(urlServer + endpoint, formData)
       if (response.data) {
-        const { email, token } = response.data
+        const { email, token, id } = response.data
         console.log(response.data)
         console.log("Usuario identificado con éxito")
 
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
-        setUser({ token })
+        setUser({ token, id })
         navigate("/mi-perfil")
-        login({ email })
+        login({ email, id })
       } else {
         alert("La respuesta del servidor no contiene el token")
       }
