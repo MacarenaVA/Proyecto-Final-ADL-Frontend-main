@@ -562,3 +562,42 @@ textarea {
   font-size: 16px;
   resize: vertical;
 }
+/* Estilos para la lista de publicaciones */
+.profile-posts-list {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-post-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.post-link {
+  text-decoration: none;
+  color: #007bff;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.post-description {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+.post-price {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.post-image {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}

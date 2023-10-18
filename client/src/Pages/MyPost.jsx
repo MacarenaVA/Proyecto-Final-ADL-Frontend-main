@@ -88,18 +88,22 @@ function MyPosts() {
         {userPosts.length === 0 ? (
           <p>No tienes publicaciones aún.</p>
         ) : (
-          <ul>
+          <div className="profile-posts-list">
             {userPosts.map((post) => (
-              <li key={post.id}>
-                <Link to={`/${post.id}`} className="product-link">
+              <div key={post.id} className="profile-post-item">
+                <Link to={`/${post.id}`} className="post-link">
                   <h2>{post.name}</h2>
                 </Link>
-                <p>{post.description}</p>
-                <p>Precio: {post.price}</p>
-                <img src={post.image} alt={post.name} />
-              </li>
+                <p className="post-description">{post.description}</p>
+                <p className="post-price">Precio: {post.price}</p>
+                <div className="img-container">
+                  <img src={post.img} alt={post.name} className="post-image" />
+                </div>
+
+                {console.log("Ruta de la imagen:", post.image)}
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
     </div>
