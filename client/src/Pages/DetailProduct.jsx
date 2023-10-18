@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import { useParams } from "react-router-dom"
-import { MyContext } from "../context/MyContext"
+import { MyContext } from "../Context/MyContext"
 
 const DetailProduct = () => {
   const {
