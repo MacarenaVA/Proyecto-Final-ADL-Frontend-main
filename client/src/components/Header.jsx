@@ -1,7 +1,7 @@
 import { NavLink } from "react-router-dom"
 import logo from "../assets/logo.png"
 import { useContext, useEffect } from "react"
-import { MyContext } from "../context/MyContext"
+import { MyContext } from "../Context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCat,
