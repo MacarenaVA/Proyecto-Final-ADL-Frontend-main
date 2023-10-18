@@ -1,6 +1,6 @@
 import React from "react"
 import { Route, Routes } from "react-router-dom"
-import { MyContextProvider } from "../context/MyContext"
+import { MyContextProvider } from "../Context/MyContext"
 import ProductList from "../pages/ProductList"
 import Cart from "../pages/Cart"
 import DetailProduct from "../pages/DetailProduct"
