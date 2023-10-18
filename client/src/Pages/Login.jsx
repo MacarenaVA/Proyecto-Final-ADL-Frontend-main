@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { MyContext } from "../context/MyContext"
+import { MyContext } from "../Context/MyContext"
 import {
   Box,
   Button,
