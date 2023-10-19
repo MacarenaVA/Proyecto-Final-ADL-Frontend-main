@@ -12,7 +12,7 @@ function Favorites() {
     const fetchFavorites = async () => {
       try {
         const response = await Axios.get(
-          "dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h/api/favorites",
+          "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h/api/favorites",
           {
             headers: {
               Authorization: `Bearer ${user.token}`,

@@ -21,7 +21,7 @@ function ModifyProfile() {
 
     try {
       const response = await Axios.put(
-        "dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h/api/profile",
+        "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h/api/profile",
         formData,
         {
           headers: {

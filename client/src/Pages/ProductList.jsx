@@ -17,7 +17,9 @@ const ProductList = () => {
 
   useEffect(() => {
     axios
-      .get("dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h")
+      .get(
+        "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h/products"
+      )
       .then((response) => {
         setAllProducts(response.data)
       })

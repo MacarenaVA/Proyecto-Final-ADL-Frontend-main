@@ -38,7 +38,8 @@ function CreateProductPost() {
       formData.append("image", product.img)
       formData.append("user_id", user.user_id)
 
-      const urlServer = "dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h"
+      const urlServer =
+        "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h"
       const endpoint = "/products"
       const response = await axios.post(urlServer + endpoint, product)
 
