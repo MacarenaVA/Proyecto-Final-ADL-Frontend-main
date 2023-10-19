@@ -22,7 +22,7 @@ function MyPosts() {
 
     try {
       const response = await axios.get(
-        `http://localhost:3000/user-posts/${user_id}`
+        `dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h/user-posts/${user_id}`
       )
 
       if (response.status === 200) {

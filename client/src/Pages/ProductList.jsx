@@ -17,7 +17,7 @@ const ProductList = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/products")
+      .get("dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h/products")
       .then((response) => {
         setAllProducts(response.data)
       })

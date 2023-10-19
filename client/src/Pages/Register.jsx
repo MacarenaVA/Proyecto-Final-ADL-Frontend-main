@@ -15,7 +15,8 @@ const Register = () => {
   }
 
   const registeredUsers = async (usuario) => {
-    const urlServer = "http://localhost:3000"
+    const urlServer =
+      "http://localhosdpg-cko4iiejmi5c7393hjrg-a/petshop_9t5ht:3000"
     const endpoint = "/usuarios"
     try {
       await axios.post(urlServer + endpoint, usuario)

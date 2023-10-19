@@ -12,7 +12,7 @@ function Favorites() {
     const fetchFavorites = async () => {
       try {
         const response = await Axios.get(
-          "http://localhost:3000/api/favorites",
+          "dpg-cko4iiejmi5c7393hjrg-a/petshop_9t5h/api/favorites",
           {
             headers: {
               Authorization: `Bearer ${user.token}`,
