@@ -9,6 +9,7 @@ const pool = new Pool({
   port: process.env.DB_PORT,
   secret: process.env.SECRET,
   allowExitOnIdle: true,
+  sll: true,
 })
 
 module.exports = pool
