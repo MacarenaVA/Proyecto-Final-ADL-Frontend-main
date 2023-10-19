@@ -23,8 +23,7 @@ const Login = () => {
     setFormData({ ...formData, ...field })
   }
   const log_in = async () => {
-    const urlServer =
-      "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h"
+    const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
     const endpoint = "/login"
     const { email, password } = formData
     try {

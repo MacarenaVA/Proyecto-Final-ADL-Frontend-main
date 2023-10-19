@@ -12,7 +12,7 @@ const CatsProductList = () => {
   useEffect(() => {
     axios
       .get(
-        "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h/products/category/gatos"
+        "https://proyecto-final-adl-frontend-main.onrender.com/products/category/gatos"
       )
       .then((response) => {
         setCatsProducts(response.data)

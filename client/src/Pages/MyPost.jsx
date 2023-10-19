@@ -22,7 +22,7 @@ function MyPosts() {
 
     try {
       const response = await axios.get(
-        `dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h/user-posts/${user_id}`
+        `https://proyecto-final-adl-frontend-main.onrender.com/user-posts/${user_id}`
       )
 
       if (response.status === 200) {

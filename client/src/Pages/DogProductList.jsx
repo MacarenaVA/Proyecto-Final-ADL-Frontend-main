@@ -12,7 +12,7 @@ const DogsProductList = () => {
   useEffect(() => {
     axios
       .get(
-        "dpg-cko4iiejmi5c7393hjrg-a.oregon-postgres.render.com/petshop_9t5h/products/category/Perro"
+        "https://proyecto-final-adl-frontend-main.onrender.com/products/category/Perro"
       )
       .then((response) => {
         setDogProducts(response.data)
