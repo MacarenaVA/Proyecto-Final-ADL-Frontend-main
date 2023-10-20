@@ -16,14 +16,18 @@ const ProductList = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios
-      .get("https://proyecto-final-adl-frontend-main.onrender.com/products")
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://proyecto-final-adl-frontend-main.onrender.com/products"
+        )
         setAllProducts(response.data)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error al cargar productos:", error)
-      })
+      }
+    }
+
+    fetchData()
   }, [setAllProducts])
 
   const handleClick = (product) => {

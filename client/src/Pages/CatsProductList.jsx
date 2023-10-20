@@ -13,16 +13,16 @@ const CatsProductList = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://proyecto-final-adl-frontend-main.onrender.com/products/category/gatos"
+          "https://proyecto-final-adl-frontend-main.onrender.com/products"
         )
-        setCatsProducts(response.data)
+        setAllProducts(response.data)
       } catch (error) {
-        console.error(error)
+        console.error("Error al cargar productos:", error)
       }
     }
 
     fetchData()
-  }, [])
+  }, [setAllProducts])
 
   const handleClick = (product) => {
     navigate(`/${product.id}`)
