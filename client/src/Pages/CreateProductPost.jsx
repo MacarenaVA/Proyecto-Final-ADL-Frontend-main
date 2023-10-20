@@ -51,9 +51,11 @@ function CreateProductPost() {
       formData.append("img", product.img)
       formData.append("user_id", product.user_id)
 
+      console.log(product)
+
       const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
       const endpoint = "/products"
-      const response = await axios.post(urlServer + endpoint, formData)
+      const response = await axios.post(urlServer + endpoint, product)
 
       console.log("URL de la solicitud:", urlServer + endpoint)
 
