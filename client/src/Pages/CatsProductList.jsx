@@ -10,16 +10,18 @@ const CatsProductList = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios
-      .get(
-        "https://proyecto-final-adl-frontend-main.onrender.com/products/category/gatos"
-      )
-      .then((response) => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://proyecto-final-adl-frontend-main.onrender.com/products/category/gatos"
+        )
         setCatsProducts(response.data)
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error(error)
-      })
+      }
+    }
+
+    fetchData()
   }, [])
 
   const handleClick = (product) => {
