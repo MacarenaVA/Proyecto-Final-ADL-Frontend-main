@@ -55,6 +55,7 @@ function CreateProductPost() {
       const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
       const endpoint = "/products"
       const response = await axios.post(urlServer + endpoint, formData)
+
       console.log("URL de la solicitud:", urlServer + endpoint)
 
       if (response.status === 200) {
