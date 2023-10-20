@@ -40,7 +40,7 @@ function CreateProductPost() {
 
       const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
       const endpoint = "/products"
-      const response = await axios.post(urlServer + endpoint, product)
+      const response = await axios.post(urlServer + endpoint, formData)
 
       if (response.status === 200) {
         console.log("La publicación se creó con éxito.")
