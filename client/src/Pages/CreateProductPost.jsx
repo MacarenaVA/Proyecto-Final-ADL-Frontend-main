@@ -7,7 +7,7 @@ import "../App.css"
 function CreateProductPost() {
   const { user, logout } = useContext(MyContext)
   const [product, setProduct] = useState({
-    name: "",
+    title: "",
     description: "",
     price: "",
     stock: "",
@@ -30,7 +30,7 @@ function CreateProductPost() {
 
     try {
       const formData = new FormData()
-      formData.append("name", product.name)
+      formData.append("title", product.title)
       formData.append("description", product.description)
       formData.append("price", product.price)
       formData.append("stock", product.stock)
