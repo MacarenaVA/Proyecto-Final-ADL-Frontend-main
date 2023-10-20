@@ -7,7 +7,7 @@ import "../App.css"
 function CreateProductPost() {
   const { user, logout } = useContext(MyContext)
   const [product, setProduct] = useState({
-    title: "",
+    name: "",
     description: "",
     price: "",
     stock: "",
@@ -29,7 +29,7 @@ function CreateProductPost() {
     e.preventDefault()
     setIsSubmitting(true)
     if (
-      !product.title ||
+      !product.name ||
       !product.description ||
       !product.price ||
       !product.stock ||
@@ -44,7 +44,7 @@ function CreateProductPost() {
 
     try {
       const formData = new FormData()
-      formData.append("title", product.title)
+      formData.append("name", product.name)
       formData.append("description", product.description)
       formData.append("price", product.price)
       formData.append("stock", product.stock)
@@ -76,7 +76,7 @@ function CreateProductPost() {
   return (
     <div className="profile-container">
       <div className="profile-sidebar">
-        <h1 className="profile-title">
+        <h1 className="profile-name">
           <Link to="/profile" className="profile-link">
             Mi Perfil
           </Link>
@@ -114,15 +114,15 @@ function CreateProductPost() {
       </div>
 
       <div className="profile-content">
-        <h1 className="profile-content-title">Crear Publicación de Producto</h1>
+        <h1 className="profile-content-name">Crear Publicación de Producto</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="title">Título:</label>
+            <label htmlFor="name">Título:</label>
             <input
               type="text"
-              id="title"
-              name="title"
-              value={product.title}
+              id="name"
+              name="name"
+              value={product.name}
               onChange={handleProductChange}
               required
             />
