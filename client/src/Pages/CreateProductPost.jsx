@@ -51,11 +51,11 @@ function CreateProductPost() {
       formData.append("categoria", product.categoria)
       formData.append("img", product.img)
       formData.append("user_id", product.user_id)
-      console.log("URL de la solicitud:", urlServer + endpoint)
 
       const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
       const endpoint = "/products"
       const response = await axios.post(urlServer + endpoint, formData)
+      console.log("URL de la solicitud:", urlServer + endpoint)
 
       if (response.status === 200) {
         console.log("La publicación se creó con éxito.")
