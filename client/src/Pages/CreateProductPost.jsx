@@ -126,6 +126,7 @@ function CreateProductPost() {
               value={product.name}
               onChange={handleProductChange}
               required
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -136,6 +137,7 @@ function CreateProductPost() {
               value={product.description}
               onChange={handleProductChange}
               required
+              autoComplete="off"
             ></textarea>
           </div>
           <div className="form-group">
@@ -147,6 +149,7 @@ function CreateProductPost() {
               value={product.price}
               onChange={handleProductChange}
               required
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -158,6 +161,7 @@ function CreateProductPost() {
               value={product.stock}
               onChange={handleProductChange}
               required
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -169,6 +173,7 @@ function CreateProductPost() {
               value={product.categoria}
               onChange={handleProductChange}
               required
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -180,6 +185,7 @@ function CreateProductPost() {
               value={product.img}
               onChange={handleProductChange}
               required
+              autoComplete="off"
             />
           </div>
           <button type="submit" className="dark-button" disabled={isSubmitting}>
