@@ -13,7 +13,7 @@ function CreateProductPost() {
     stock: "",
     categoria: "",
     img: "",
-    user_id: user.user_id,
+    user_id: user.id,
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
