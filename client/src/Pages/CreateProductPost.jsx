@@ -120,6 +120,7 @@ function CreateProductPost() {
             <label htmlFor="name">Título:</label>
             <input
               type="text"
+              id="name"
               name="name"
               value={product.name}
               onChange={handleProductChange}
@@ -130,6 +131,7 @@ function CreateProductPost() {
           <div className="form-group">
             <label htmlFor="description">Descripción:</label>
             <textarea
+              id="description"
               name="description"
               value={product.description}
               onChange={handleProductChange}
@@ -141,6 +143,7 @@ function CreateProductPost() {
             <label htmlFor="price">Precio:</label>
             <input
               type="number"
+              id="price"
               name="price"
               value={product.price}
               onChange={handleProductChange}
@@ -152,6 +155,7 @@ function CreateProductPost() {
             <label htmlFor="stock">Stock:</label>
             <input
               type="number"
+              id="stock"
               name="stock"
               value={product.stock}
               onChange={handleProductChange}
@@ -163,6 +167,7 @@ function CreateProductPost() {
             <label htmlFor="categoria">Categoria (Perro o gato):</label>
             <input
               type="text"
+              id="categoria"
               name="categoria"
               value={product.categoria}
               onChange={handleProductChange}
@@ -174,6 +179,7 @@ function CreateProductPost() {
             <label htmlFor="img">Imagen:</label>
             <input
               type="text"
+              id="img"
               name="img"
               value={product.img}
               onChange={handleProductChange}
