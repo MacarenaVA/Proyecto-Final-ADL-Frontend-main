@@ -21,6 +21,7 @@ function CreateProductPost() {
   const handleProductChange = (e) => {
     const { name, value } = e.target
     setProduct({ ...product, [name]: value })
+    console.log(`Campo ${name} actualizado con valor: ${value}`)
   }
 
   const handleSubmit = async (e) => {
