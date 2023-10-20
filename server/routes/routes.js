@@ -78,7 +78,7 @@ router.get("/products", async (req, res) => {
   }
 })
 
-router.post("/products", async (req, res) => {
+router.post("/products", tokenVerification, async (req, res) => {
   console.log("Datos del producto a insertar:", req.body)
   try {
     const productos = req.body
