@@ -75,8 +75,8 @@ const getProducts = async () => {
 
 const createProduct = async (product) => {
   try {
-    let { img, title, description, price, categoria, stock, user_id } = product
-    const values = [img, title, description, price, categoria, stock, user_id]
+    let { img, name, description, price, categoria, stock, user_id } = product
+    const values = [img, name, description, price, categoria, stock, user_id]
     const consult = `INSERT INTO productos VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7)`
     await pool.query(consult, values)
     console.log("Producto insertado con éxito.")
