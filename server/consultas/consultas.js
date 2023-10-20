@@ -75,6 +75,7 @@ const getProducts = async () => {
 
 const createProduct = async (product) => {
   try {
+    console.log("Datos del producto a insertar:", product)
     let { img, name, description, price, categoria, stock, user_id } = product
     const values = [img, name, description, price, categoria, stock, user_id]
     const consult = `INSERT INTO productos VALUES (DEFAULT, $1, $2, $3, $4, $5, $6, $7)`
