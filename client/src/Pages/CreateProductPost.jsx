@@ -27,6 +27,19 @@ function CreateProductPost() {
     console.log(user.id)
     e.preventDefault()
     setIsSubmitting(true)
+    if (
+      !product.title ||
+      !product.description ||
+      !product.price ||
+      !product.stock ||
+      !product.categoria ||
+      !product.img
+    ) {
+      console.error("Por favor, complete todos los campos.")
+      setIsSubmitting(false)
+      return
+    }
+    console.log("Valores de product:", product)
 
     try {
       const formData = new FormData()
