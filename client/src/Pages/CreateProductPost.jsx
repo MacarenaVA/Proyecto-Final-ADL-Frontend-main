@@ -35,7 +35,7 @@ function CreateProductPost() {
       formData.append("price", product.price)
       formData.append("stock", product.stock)
       formData.append("categoria", product.categoria)
-      formData.append("image", product.img)
+      formData.append("img", product.img)
       formData.append("user_id", user.user_id)
 
       const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
