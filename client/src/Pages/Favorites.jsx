@@ -57,7 +57,7 @@ function Favorites() {
     <div className="profile-container">
       <div className="profile-sidebar">
         <h1 className="profile-title">
-          <Link to="/profile" className="profile-link">
+          <Link to="/mi-perfil" className="profile-link">
             Mi Perfil
           </Link>
         </h1>

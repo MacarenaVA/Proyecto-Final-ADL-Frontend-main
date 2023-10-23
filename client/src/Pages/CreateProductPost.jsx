@@ -85,7 +85,7 @@ function CreateProductPost() {
         </h1>
         <ul className="profile-links">
           <li>
-            <Link to="/profile" className="profile-link">
+            <Link to="/mi-perfil" className="profile-link">
               Mi Perfil
             </Link>
           </li>
