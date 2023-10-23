@@ -1,7 +1,5 @@
+import React, { useContext } from "react"
 import { NavLink } from "react-router-dom"
-import logo from "../assets/logo.png"
-import { useContext } from "react"
-import { MyContext } from "../Context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCat,
@@ -10,12 +8,43 @@ import {
   faUser,
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons"
+import { MyContext } from "../Context/MyContext"
+import logo from "../assets/logo.png"
 
 const Header = () => {
-  const activeClass = ({ isActive }) => (isActive ? "active" : "")
   const { isAuthenticated, logout, countProducts } = useContext(MyContext)
 
-  console.log("Header se está renderizando. countProducts:", countProducts)
+  const activeClass = ({ isActive }) => (isActive ? "active" : "")
+
+  const renderAuthLinks = () => {
+    if (isAuthenticated) {
+      return (
+        <>
+          <NavLink to="/mi-perfil">
+            <FontAwesomeIcon icon={faUser} />
+            Perfil
+          </NavLink>
+          <NavLink to="/" onClick={handleLogout}>
+            <FontAwesomeIcon icon={faUser} />
+            Cerrar Sesión
+          </NavLink>
+        </>
+      )
+    } else {
+      return (
+        <>
+          <NavLink to="/login">
+            <FontAwesomeIcon icon={faUser} />
+            Ingresar
+          </NavLink>
+          <NavLink to="/register">
+            <FontAwesomeIcon icon={faUserPlus} />
+            Registrarse
+          </NavLink>
+        </>
+      )
+    }
+  }
 
   const handleLogout = () => {
     logout()
@@ -42,33 +71,11 @@ const Header = () => {
             <FontAwesomeIcon icon={faDog} />
             Perros
           </NavLink>
-          {isAuthenticated ? (
-            <>
-              <NavLink to="/mi-perfil">
-                <FontAwesomeIcon icon={faUser} />
-                Perfil
-              </NavLink>
-              <NavLink to="/" onClick={handleLogout}>
-                <FontAwesomeIcon icon={faUser} />
-                Cerrar Sesión
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/login">
-                <FontAwesomeIcon icon={faUser} />
-                Ingresar
-              </NavLink>
-              <NavLink to="/register">
-                <FontAwesomeIcon icon={faUserPlus} />
-                Registrarse
-              </NavLink>
-            </>
-          )}
+          {renderAuthLinks()}
         </div>
         <NavLink className={activeClass} to="/cart">
           <div className="header-r">
-            <i className="fa-solid fa-cart-shopping"></i>
+            <FontAwesomeIcon icon="cart-shopping" />
             <p className="cart-num">{countProducts}</p>
           </div>
         </NavLink>
