@@ -42,7 +42,6 @@ const Login = () => {
         setUser({ token, id })
 
         if (isAuthenticated) {
-          // Redirige al usuario a la página de "Mi Perfil"
           navigate("/mi-perfil")
         } else {
           login({ email, id })
