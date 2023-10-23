@@ -22,10 +22,6 @@ const Header = () => {
     logout()
   }
 
-  useEffect(() => {
-    document.title = `Carrito (${countProducts} productos)`
-  }, [countProducts])
-
   return (
     <div className="header-container">
       <header>
@@ -74,11 +70,7 @@ const Header = () => {
         <NavLink className={activeClass} to="/cart">
           <div className="header-r">
             <i className="fa-solid fa-cart-shopping"></i>
-            <p
-              className={`cart-num ${
-                countProducts.length === 0 ? "hidden" : ""
-              }`}
-            >
+            <p className={`cart-num ${countProducts === 0 ? "hidden" : ""}`}>
               {countProducts}
             </p>
           </div>
