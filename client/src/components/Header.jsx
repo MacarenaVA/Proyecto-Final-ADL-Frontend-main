@@ -24,7 +24,7 @@ const Header = () => {
 
   useEffect(() => {
     document.title = `Carrito (${countProducts} productos)`
-  }, [isAuthenticated, countProducts])
+  }, [countProducts])
 
   return (
     <div className="header-container">
