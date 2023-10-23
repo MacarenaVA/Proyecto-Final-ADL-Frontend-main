@@ -13,7 +13,7 @@ import {
 
 const Header = () => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
-  const { isAuthenticated, logout, countProducts, allProducts } =
+  const { isAuthenticated, logout, cartProducts, allProducts } =
     useContext(MyContext)
 
   const handleLogout = () => {
@@ -73,7 +73,7 @@ const Header = () => {
             <p
               className={`cart-num ${allProducts.length === 0 ? "hidden" : ""}`}
             >
-              {countProducts}
+              {cartProducts}
             </p>
           </div>
         </NavLink>
