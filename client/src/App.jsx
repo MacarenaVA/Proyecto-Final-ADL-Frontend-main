@@ -1,7 +1,8 @@
 import React, { useContext } from "react"
 import { MyContext } from "./Context/MyContext"
 import { Routes, Route } from "react-router-dom"
-import Header from "./components/Header"
+import PublicHeader from "./components/PublicHeader"
+import PrivateHeader from "./components/PrivateHeader"
 import PublicRoutes from "./router/PublicRoutes"
 import PrivateRoutes from "./router/PrivateRoutes"
 import Footer from "./components/Footer"
@@ -12,7 +13,7 @@ function App() {
 
   return (
     <div>
-      <Header />
+      {isAuthenticated ? <PrivateHeader /> : <PublicHeader />}
       <Routes>
         <Route path="/*" element={<PublicRoutes />} />
 
