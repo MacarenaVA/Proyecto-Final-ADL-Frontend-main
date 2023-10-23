@@ -5,8 +5,7 @@ import axios from "axios"
 
 const DogsProductList = () => {
   const [dogProducts, setDogProducts] = useState([])
-  const { setCountProducts, setTotal, cartProducts, setCartProducts } =
-    useContext(MyContext)
+  const { cartProducts, updateCart } = useContext(MyContext)
   const navigate = useNavigate()
 
   useEffect(() => {

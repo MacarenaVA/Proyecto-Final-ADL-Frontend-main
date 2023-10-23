@@ -5,14 +5,8 @@ import axios from "axios"
 
 const ProductList = () => {
   const chile = new Intl.NumberFormat("es-CL")
-  const {
-    allProducts,
-    setAllProducts,
-    cartProducts,
-    setCartProducts,
-    setCountProducts,
-    setTotal,
-  } = useContext(MyContext)
+  const { allProducts, setAllProducts, cartProducts, updateCart } =
+    useContext(MyContext)
   const navigate = useNavigate()
 
   useEffect(() => {
