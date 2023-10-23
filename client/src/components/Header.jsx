@@ -70,7 +70,7 @@ const Header = () => {
         <NavLink className={activeClass} to="/cart">
           <div className="header-r">
             <i className="fa-solid fa-cart-shopping"></i>
-            <p className={`${allProducts.length === 0 ? "hidden" : ""}`}>
+            <p className={`${countProducts.length === 0 ? "hidden" : ""}`}>
               {countProducts}
             </p>
           </div>
