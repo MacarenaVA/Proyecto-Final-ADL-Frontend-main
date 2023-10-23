@@ -13,6 +13,11 @@ import logo from "../assets/logo.png"
 
 const Header = () => {
   const { isAuthenticated, logout, countProducts } = useContext(MyContext)
+  console.log("Header se está renderizando. isAuthenticated:", isAuthenticated)
+
+  useEffect(() => {
+    console.log("Count de productos actualizado:", countProducts)
+  }, [countProducts])
 
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
 
