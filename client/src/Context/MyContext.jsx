@@ -32,6 +32,7 @@ const MyContextProvider = ({ children }) => {
 
     console.log("updateCart - countProducts:", newCountProducts)
     console.log("updateCart - total:", newTotal)
+    console.log(updateCart)
   }
 
   const login = (userData) => {
