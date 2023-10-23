@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route path="/*" element={<PublicRoutes />} />
 
-        {isAuthenticated ? ( // Verifica si el usuario está autenticado
+        {isAuthenticated ? (
           <Route path="/mi-perfil/*" element={<PrivateRoutes />} />
         ) : (
           <Route path="/login" element={<Login />} />
