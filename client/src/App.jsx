@@ -6,7 +6,7 @@ import PrivateHeader from "./components/PrivateHeader"
 import PublicRoutes from "./router/PublicRoutes"
 import PrivateRoutes from "./router/PrivateRoutes"
 import Footer from "./components/Footer"
-import Login from "./components/Login"
+import Login from "./Pages/Login"
 
 function App() {
   const { isAuthenticated } = useContext(MyContext)
