@@ -33,19 +33,16 @@ const Login = () => {
       }
 
       const response = await axios.post(urlServer + endpoint, formData)
-      if (response.data) {
+      if (response.data && response.data.email) {
+        // Verifica que la respuesta contiene el email del usuario
         const { email, token, id } = response.data
         console.log("Usuario identificado con éxito")
-
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
-        setUser({ token, id })
-        login({ email, id })
-
-        // Redirigir al usuario a la página "mi-perfil"
+        setUser({ token, id, email }) // Asigna el email a la propiedad user.email
         navigate("/mi-perfil")
       } else {
-        alert("La respuesta del servidor no contiene el token")
+        alert("La respuesta del servidor no contiene el email")
       }
     } catch (error) {
       if (error.response) {
