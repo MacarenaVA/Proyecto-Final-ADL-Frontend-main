@@ -28,6 +28,8 @@ const MyContextProvider = ({ children }) => {
 
     setCountProducts(newCountProducts)
     setTotal(newTotal)
+    updateCart(updatedProducts)
+
     console.log("updateCart - countProducts:", newCountProducts)
     console.log("updateCart - total:", newTotal)
   }
