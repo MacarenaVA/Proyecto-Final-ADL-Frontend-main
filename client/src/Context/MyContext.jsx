@@ -59,7 +59,7 @@ const MyContextProvider = ({ children }) => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get("/products")
+        const response = await axios.get("/")
         setAllProducts(response.data)
       } catch (error) {
         console.error("Error al obtener los productos:", error)
