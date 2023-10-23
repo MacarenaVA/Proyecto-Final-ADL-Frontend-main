@@ -29,17 +29,44 @@ const MyContextProvider = ({ children }) => {
     setCartProducts(updatedProducts)
   }
 
-  const login = (userData) => {
-    console.log("Datos del usuario:", userData)
-    setUser({ email: userData.email, id: userData.id })
-    setIsAuthenticated(true)
+  const login = async (userData) => {
+    try {
+      const response = await fetch("URL_DE_LA_API/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      })
+
+      if (response.ok) {
+        const data = await response.json()
+
+        localStorage.setItem("token", data.token)
+
+        setUser({ email: userData.email, id: userData.id })
+        setIsAuthenticated(true)
+      } else {
+        console.error("Error en inicio de sesión:", response.status)
+      }
+    } catch (error) {
+      console.error("Error en inicio de sesión:", error)
+    }
   }
 
-  const logout = () => {
-    localStorage.removeItem("token")
-    setUser({ email: null })
-    setIsAuthenticated(false)
-    navigate("/login")
+  const logout = async () => {
+    try {
+      await axios.post("/api/logout")
+
+      localStorage.removeItem("token")
+
+      setUser({ email: null, id: null })
+      setIsAuthenticated(false)
+
+      navigate("/login")
+    } catch (error) {
+      console.error("Error al cerrar la sesión:", error)
+    }
   }
 
   const navigate = useNavigate()
