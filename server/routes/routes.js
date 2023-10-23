@@ -132,13 +132,24 @@ router.get("/:id", async (req, res) => {
 
 router.get("/cart", async (req, res) => {
   try {
-    const userId = req.params.userId
+    let userId = null
+    const { userId: queryUserId, isAuthenticated } = req.query
+
+    if (isAuthenticated === "true" && queryUserId) {
+      userId = queryUserId
+    } else if (isAuthenticated === "false" && !queryUserId) {
+    } else {
+      throw new Error("Usuario no autenticado o falta de parámetros")
+    }
+
     const cartProducts = await getCartProducts(userId)
     res.json(cartProducts)
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Error al obtener los productos del carrito de compras" })
+    res.status(500).json({
+      error:
+        error.message ||
+        "Error al obtener los productos del carrito de compras",
+    })
   }
 })
 module.exports = router
