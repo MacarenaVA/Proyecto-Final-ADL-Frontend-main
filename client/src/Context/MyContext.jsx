@@ -6,7 +6,7 @@ const MyContext = createContext()
 const MyContextProvider = ({ children }) => {
   const [allProducts, setAllProducts] = useState([])
   const [cartProducts, setCartProducts] = useState([])
-  const [countProducts, setCountProducts] = useState(0)
+  const [countProducts, setCountProducts] = useState([0])
   const [total, setTotal] = useState(0)
   const [user, setUser] = useState({ email: null, id: null })
   const [isAuthenticated, setIsAuthenticated] = useState(false)
