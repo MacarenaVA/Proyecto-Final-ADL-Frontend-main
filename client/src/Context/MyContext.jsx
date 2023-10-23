@@ -11,9 +11,6 @@ const MyContextProvider = ({ children }) => {
   const [user, setUser] = useState({ email: null, id: null })
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const calcularCountProducts = (products) => {
-    return products.reduce((count, product) => count + product.qty, 0)
-  }
   const calcularTotal = (products) => {
     return products.reduce(
       (total, product) => total + product.price * product.qty,
