@@ -13,19 +13,7 @@ function App() {
   const [user, setUser] = useState(null)
 
   return (
-    <MyContextProvider
-      value={{
-        user,
-        setUser,
-        userData,
-        allProducts,
-        setAllProducts,
-        total,
-        setTotal,
-        countProducts,
-        setCountProducts,
-      }}
-    >
+    <MyContextProvider>
       <Header />
       <AppRouter />
       <Footer />
