@@ -12,7 +12,7 @@ import {
 } from "@mui/material"
 
 const Login = () => {
-  const { setUser, login, isAuthenticated } = useContext(MyContext)
+  const { setUser, login } = useContext(MyContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
 
@@ -40,12 +40,10 @@ const Login = () => {
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
         setUser({ token, id })
+        login({ email, id })
 
-        if (isAuthenticated) {
-          navigate("/mi-perfil")
-        } else {
-          login({ email, id })
-        }
+        // Redirigir al usuario a la página "mi-perfil"
+        navigate("/mi-perfil")
       } else {
         alert("La respuesta del servidor no contiene el token")
       }
