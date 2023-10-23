@@ -13,8 +13,7 @@ import {
 
 const Header = () => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
-  const { isAuthenticated, logout, countProducts, allProducts } =
-    useContext(MyContext)
+  const { isAuthenticated, logout, countProducts } = useContext(MyContext)
 
   console.log("Header se está renderizando. countProducts:", countProducts)
 
