@@ -15,6 +15,10 @@ const Header = () => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
   const { isAuthenticated, logout, countProducts } = useContext(MyContext)
 
+  useEffect(() => {
+    console.log("countProducts cambió:", countProducts)
+  }, [countProducts])
+
   console.log("Header se está renderizando. countProducts:", countProducts)
 
   const handleLogout = () => {
