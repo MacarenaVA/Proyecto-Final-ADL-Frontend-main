@@ -22,17 +22,11 @@ const MyContextProvider = ({ children }) => {
   }
 
   const updateCart = (updatedProducts) => {
-    console.log("updateCart se está ejecutando")
-    console.log("Productos actualizados:", updatedProducts)
     const newCountProducts = calcularCountProducts(updatedProducts)
     const newTotal = calcularTotal(updatedProducts)
-
     setCountProducts(newCountProducts)
     setTotal(newTotal)
     setCartProducts(updatedProducts)
-
-    console.log("updateCart - countProducts:", newCountProducts)
-    console.log("updateCart - total:", newTotal)
   }
 
   const login = (userData) => {
