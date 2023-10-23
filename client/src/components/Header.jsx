@@ -16,6 +16,8 @@ const Header = () => {
   const { isAuthenticated, logout, countProducts, allProducts } =
     useContext(MyContext)
 
+  console.log("Header se está renderizando. countProducts:", countProducts)
+
   const handleLogout = () => {
     logout()
   }
