@@ -11,6 +11,8 @@ const MyContextProvider = ({ children }) => {
   const [user, setUser] = useState({ email: null, id: null })
   const [isAuthenticated, setIsAuthenticated] = useState(false)
 
+  const navigate = useNavigate()
+
   const calcularCountProducts = (products) => {
     return products.reduce((count, product) => count + product.qty, 0)
   }
@@ -31,7 +33,7 @@ const MyContextProvider = ({ children }) => {
 
   const login = async (userData) => {
     try {
-      const response = await fetch("URL_DE_LA_API/login", {
+      const response = await fetch("/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,7 +58,7 @@ const MyContextProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await axios.post("/api/logout")
+      await axios.post("/logout")
 
       localStorage.removeItem("token")
 
@@ -69,7 +71,18 @@ const MyContextProvider = ({ children }) => {
     }
   }
 
-  const navigate = useNavigate()
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get("URL_DE_TU_API/products")
+        setAllProducts(response.data)
+      } catch (error) {
+        console.error("Error al obtener los productos:", error)
+      }
+    }
+
+    fetchProducts()
+  }, [])
 
   return (
     <MyContext.Provider
