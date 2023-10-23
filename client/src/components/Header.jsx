@@ -52,18 +52,6 @@ const Header = () => {
                 <FontAwesomeIcon icon={faUser} />
                 Cerrar Sesión
               </NavLink>
-              <NavLink className={activeClass} to="/cart">
-                <div className="header-r">
-                  <i className="fa-solid fa-cart-shopping"></i>
-                  <p
-                    className={`cart-num ${
-                      countProducts === 0 ? "hidden" : ""
-                    }`}
-                  >
-                    {countProducts}
-                  </p>
-                </div>
-              </NavLink>
             </>
           ) : (
             <>
@@ -78,6 +66,14 @@ const Header = () => {
             </>
           )}
         </div>
+        <NavLink className={activeClass} to="/cart">
+          <div className="header-r">
+            <i className="fa-solid fa-cart-shopping"></i>
+            <p className={`cart-num ${countProducts === 0 ? "hidden" : ""}`}>
+              {countProducts}
+            </p>
+          </div>
+        </NavLink>
       </header>
     </div>
   )
