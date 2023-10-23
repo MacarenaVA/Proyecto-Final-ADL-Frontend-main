@@ -69,7 +69,7 @@ const Header = () => {
         <NavLink className={activeClass} to="/cart">
           <div className="header-r">
             <i className="fa-solid fa-cart-shopping"></i>
-            <p className={`cart-num ${countProducts}`}></p>
+            <p className={`cart-num ${countProducts}`}>{countProducts}</p>
           </div>
         </NavLink>
       </header>
