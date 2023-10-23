@@ -22,7 +22,9 @@ const Header = () => {
     logout()
   }
 
-  useEffect(() => {}, [isAuthenticated])
+  useEffect(() => {
+    document.title = `Carrito (${countProducts} productos)`
+  }, [isAuthenticated, countProducts])
 
   return (
     <div className="header-container">
@@ -73,7 +75,9 @@ const Header = () => {
           <div className="header-r">
             <i className="fa-solid fa-cart-shopping"></i>
             <p
-              className={`cart-num ${allProducts.length === 0 ? "hidden" : ""}`}
+              className={`cart-num ${
+                countProducts.length === 0 ? "hidden" : ""
+              }`}
             >
               {countProducts}
             </p>
