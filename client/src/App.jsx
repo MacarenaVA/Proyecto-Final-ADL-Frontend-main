@@ -1,18 +1,29 @@
-import React from "react"
-import { MyContextProvider } from "./Context/MyContext"
+import React, { useContext } from "react"
+import { MyContext } from "./Context/MyContext"
+import { Routes, Route } from "react-router-dom"
 import Header from "./components/Header"
-import AppRouter from "./router/AppRouter"
+import PublicRoutes from "./router/PublicRoutes"
+import PrivateRoutes from "./router/PrivateRoutes"
 import Footer from "./components/Footer"
+import Login from "./components/Login"
 
 function App() {
+  const { isAuthenticated } = useContext(MyContext)
+
   return (
-    <MyContextProvider>
-      <div>
-        <Header />
-        <AppRouter />
-        <Footer />
-      </div>
-    </MyContextProvider>
+    <div>
+      <Header />
+      <Routes>
+        <Route path="/*" element={<PublicRoutes />} />
+
+        {isAuthenticated ? ( // Verifica si el usuario está autenticado
+          <Route path="/mi-perfil/*" element={<PrivateRoutes />} />
+        ) : (
+          <Route path="/login" element={<Login />} />
+        )}
+      </Routes>
+      <Footer />
+    </div>
   )
 }
 

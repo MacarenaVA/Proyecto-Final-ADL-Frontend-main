@@ -1,7 +1,6 @@
+// PrivateHeader.js
 import { NavLink } from "react-router-dom"
 import logo from "../assets/logo.png"
-import { useContext } from "react"
-import { MyContext } from "../Context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
   faCat,
@@ -11,9 +10,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons"
 
-const Header = () => {
-  const { isAuthenticated, logout, cartProductCount } = useContext(MyContext)
-
+const PrivateHeader = ({ logout, cartProductCount }) => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
 
   const handleLogout = () => {
@@ -41,29 +38,14 @@ const Header = () => {
             <FontAwesomeIcon icon={faDog} />
             Perros
           </NavLink>
-          {isAuthenticated ? (
-            <>
-              <NavLink to="/mi-perfil">
-                <FontAwesomeIcon icon={faUser} />
-                Perfil
-              </NavLink>
-              <NavLink to="/" onClick={handleLogout}>
-                <FontAwesomeIcon icon={faUser} />
-                Cerrar Sesión
-              </NavLink>
-            </>
-          ) : (
-            <>
-              <NavLink to="/login">
-                <FontAwesomeIcon icon={faUser} />
-                Ingresar
-              </NavLink>
-              <NavLink to="/register">
-                <FontAwesomeIcon icon={faUserPlus} />
-                Registrarse
-              </NavLink>
-            </>
-          )}
+          <NavLink to="/mi-perfil">
+            <FontAwesomeIcon icon={faUser} />
+            Perfil
+          </NavLink>
+          <NavLink to="/" onClick={handleLogout}>
+            <FontAwesomeIcon icon={faUser} />
+            Cerrar Sesión
+          </NavLink>
         </div>
         <NavLink to="/cart" className="header-r">
           <i className="fa-solid fa-cart-shopping"></i>
@@ -74,4 +56,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default PrivateHeader
