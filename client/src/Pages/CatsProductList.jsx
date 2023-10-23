@@ -40,36 +40,12 @@ const CatsProductList = () => {
         item.id === product.id ? updatedProductInCart : item
       )
 
-      setCartProducts(updatedCartProducts)
-
-      const newCountProducts = updatedCartProducts.reduce(
-        (count, item) => count + item.qty,
-        0
-      )
-      const newTotal = updatedCartProducts.reduce(
-        (total, item) => total + item.price * item.qty,
-        0
-      )
-
-      setCountProducts(newCountProducts)
-      setTotal(newTotal)
+      updateCart(updatedCartProducts)
     } else {
       product.qty = 1
       const updatedCartProducts = [...cartProducts, product]
 
-      setCartProducts(updatedCartProducts)
-
-      const newCountProducts = updatedCartProducts.reduce(
-        (count, item) => count + item.qty,
-        0
-      )
-      const newTotal = updatedCartProducts.reduce(
-        (total, item) => total + item.price * item.qty,
-        0
-      )
-
-      setCountProducts(newCountProducts)
-      setTotal(newTotal)
+      updateCart(updatedCartProducts)
     }
 
     console.log("Producto agregado al carrito:", product)
