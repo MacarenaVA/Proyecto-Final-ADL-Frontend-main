@@ -73,7 +73,7 @@ const Header = () => {
             <p
               className={`cart-num ${allProducts.length === 0 ? "hidden" : ""}`}
             >
-              {cartProducts}
+              {product.qty}
             </p>
           </div>
         </NavLink>
