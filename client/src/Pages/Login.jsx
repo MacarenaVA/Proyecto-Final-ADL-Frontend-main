@@ -12,20 +12,21 @@ import {
 } from "@mui/material"
 
 const Login = () => {
-  const { setUser } = useContext(MyContext)
+  const { setUser, login, isAuthenticated } = useContext(MyContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
-  const { login } = useContext(MyContext)
 
   const handleSetUsuario = ({ target: { value, name } }) => {
     const field = {}
     field[name] = value
     setFormData({ ...formData, ...field })
   }
+
   const log_in = async () => {
     const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
     const endpoint = "/login"
     const { email, password } = formData
+
     try {
       if (!email || !password) {
         return alert("Email y contraseña son obligatorios")
@@ -34,14 +35,18 @@ const Login = () => {
       const response = await axios.post(urlServer + endpoint, formData)
       if (response.data) {
         const { email, token, id } = response.data
-        console.log(response.data)
         console.log("Usuario identificado con éxito")
 
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
         setUser({ token, id })
-        navigate("/mi-perfil")
-        login({ email, id })
+
+        if (isAuthenticated) {
+          // Redirige al usuario a la página de "Mi Perfil"
+          navigate("/mi-perfil")
+        } else {
+          login({ email, id })
+        }
       } else {
         alert("La respuesta del servidor no contiene el token")
       }
