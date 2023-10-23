@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom"
 import logo from "../assets/logo.png"
-import { useContext, useEffect } from "react"
+import { useContext } from "react"
 import { MyContext } from "../Context/MyContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import {
@@ -52,6 +52,18 @@ const Header = () => {
                 <FontAwesomeIcon icon={faUser} />
                 Cerrar Sesión
               </NavLink>
+              <NavLink className={activeClass} to="/cart">
+                <div className="header-r">
+                  <i className="fa-solid fa-cart-shopping"></i>
+                  <p
+                    className={`cart-num ${
+                      countProducts === 0 ? "hidden" : ""
+                    }`}
+                  >
+                    {countProducts}
+                  </p>
+                </div>
+              </NavLink>
             </>
           ) : (
             <>
@@ -66,14 +78,6 @@ const Header = () => {
             </>
           )}
         </div>
-        <NavLink className={activeClass} to="/cart">
-          <div className="header-r">
-            <i className="fa-solid fa-cart-shopping"></i>
-            <p className={`cart-num ${countProducts === 0 ? "hidden" : ""}`}>
-              {countProducts}
-            </p>
-          </div>
-        </NavLink>
       </header>
     </div>
   )
