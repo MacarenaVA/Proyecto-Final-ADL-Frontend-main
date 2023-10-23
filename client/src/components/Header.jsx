@@ -12,10 +12,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 const Header = () => {
-  const activeClass = ({ isActive }) => (isActive ? "active" : "")
-  const { isAuthenticated, logout, countProducts } = useContext(MyContext)
+  const { isAuthenticated, logout, cartProductCount } = useContext(MyContext)
 
-  console.log("Header se está renderizando. countProducts:", countProducts)
+  const activeClass = ({ isActive }) => (isActive ? "active" : "")
 
   const handleLogout = () => {
     logout()
@@ -66,11 +65,9 @@ const Header = () => {
             </>
           )}
         </div>
-        <NavLink className={activeClass} to="/cart">
-          <div className="header-r">
-            <i className="fa-solid fa-cart-shopping"></i>
-            <p className={`cart-num ${countProducts}`}>{countProducts}</p>
-          </div>
+        <NavLink to="/cart" className="header-r">
+          <i className="fa-solid fa-cart-shopping"></i>
+          <p className={`cart-num ${cartProductCount}`}>{cartProductCount}</p>
         </NavLink>
       </header>
     </div>
