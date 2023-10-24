@@ -97,6 +97,7 @@ const MyContextProvider = ({ children }) => {
         login,
         logout,
         isAuthenticated,
+        setIsAuthenticated,
         navigate,
         cartProducts,
         setCartProducts,
