@@ -47,10 +47,12 @@ const PrivateHeader = ({ logout, cartProductCount }) => {
             Cerrar Sesión
           </NavLink>
         </div>
-        <NavLink to="/cart" className="header-r">
-          <i className="fa-solid fa-cart-shopping"></i>
-          <p className={`cart-num ${cartProductCount}`}>{cartProductCount}</p>
-        </NavLink>
+        <>
+          <NavLink to="/cart" className="header-r">
+            <i className="fa-solid fa-cart-shopping"></i>
+            <p className={`cart-num ${cartProductCount}`}>{cartProductCount}</p>
+          </NavLink>
+        </>
       </header>
     </div>
   )
