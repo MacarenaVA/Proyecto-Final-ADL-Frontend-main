@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { MyContextProvider, MyContext } from "./Context/MyContext"
 import PublicHeader from "./components/PublicHeader"
 import PrivateHeader from "./components/PrivateHeader"
