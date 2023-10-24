@@ -79,6 +79,7 @@ const MyContextProvider = ({ children }) => {
     }
 
     fetchProducts()
+    validateToken()
   }, [])
 
   return (
