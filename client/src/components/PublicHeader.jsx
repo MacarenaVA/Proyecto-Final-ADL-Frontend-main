@@ -15,41 +15,46 @@ const PublicHeader = ({ cartProductCount }) => {
   return (
     <div className="header-container">
       <header>
-        <div className="header-l">
-          <NavLink to="/">
-            <img src={logo} alt="logo" className="logo" />
-          </NavLink>
-        </div>
-        <div className="header-c">
-          <NavLink className={activeClass} to="/">
-            <FontAwesomeIcon icon={faHouse} />
-            Inicio
-          </NavLink>
-          <NavLink to="/products/category/gatos">
-            <FontAwesomeIcon icon={faCat} />
-            Gatos
-          </NavLink>
-          <NavLink to="/products/category/Perro">
-            <FontAwesomeIcon icon={faDog} />
-            Perros
-          </NavLink>
-          <NavLink to="/login">
-            <FontAwesomeIcon icon={faUser} />
-            Ingresar
-          </NavLink>
-          <NavLink to="/register">
-            <FontAwesomeIcon icon={faUserPlus} />
-            Registrarse
-          </NavLink>
-          <>
+        <>
+          <div className="header-l">
+            <NavLink to="/">
+              <img src={logo} alt="logo" className="logo" />
+            </NavLink>
+          </div>
+          <div className="header-c">
+            <NavLink className={activeClass} to="/">
+              <FontAwesomeIcon icon={faHouse} />
+              Inicio
+            </NavLink>
+            <NavLink to="/products/category/gatos">
+              <FontAwesomeIcon icon={faCat} />
+              Gatos
+            </NavLink>
+            <NavLink to="/products/category/Perro">
+              <FontAwesomeIcon icon={faDog} />
+              Perros
+            </NavLink>
+            <NavLink to="/login">
+              <FontAwesomeIcon icon={faUser} />
+              Ingresar
+            </NavLink>
+            <NavLink to="/register">
+              <FontAwesomeIcon icon={faUserPlus} />
+              Registrarse
+            </NavLink>
             <NavLink to="/cart" className="header-r">
               <i className="fa-solid fa-cart-shopping"></i>
-              <p className={`cart-num ${cartProductCount}`}>
-                {cartProductCount}
-              </p>
+              <p className={`cart-num`}>5</p>
             </NavLink>
-          </>
-        </div>
+          </div>
+        </>
+
+        <>
+          <NavLink to="/cart" className="header-r">
+            <i className="fa-solid fa-cart-shopping"></i>
+            <p className={`cart-num`}>{cartProductCount}</p>
+          </NavLink>
+        </>
       </header>
     </div>
   )
