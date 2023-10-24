@@ -11,7 +11,20 @@ function App() {
 
   return (
     <div>
-      <MyContext.Provider value={{ token }}>
+      <MyContext.Provider
+        value={{
+          token,
+          allProducts,
+          setAllProducts,
+          cartProducts,
+          updateCart,
+          countProducts,
+          total,
+          setUser,
+          login,
+          logout,
+        }}
+      >
         {token ? <PrivateHeader /> : <PublicHeader />}
         {token ? <PrivateRoutes /> : <PublicRoutes />}
       </MyContext.Provider>
