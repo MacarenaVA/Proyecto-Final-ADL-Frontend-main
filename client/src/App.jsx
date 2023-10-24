@@ -7,7 +7,18 @@ import PrivateRoutes from "./router/PrivateRoutes"
 import Footer from "./components/Footer"
 
 function App() {
-  const { token } = useContext(MyContext)
+  const {
+    token,
+    allProducts,
+    setAllProducts,
+    cartProducts,
+    updateCart,
+    countProducts,
+    total,
+    setUser,
+    login,
+    logout,
+  } = useContext(MyContext)
 
   return (
     <div>
