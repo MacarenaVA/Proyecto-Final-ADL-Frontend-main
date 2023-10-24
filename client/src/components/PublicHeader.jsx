@@ -42,13 +42,8 @@ const PublicHeader = ({ cartProductCount }) => {
               <FontAwesomeIcon icon={faUserPlus} />
               Registrarse
             </NavLink>
-            <NavLink to="/cart" className="header-r">
-              <i className="fa-solid fa-cart-shopping"></i>
-              <p className={`cart-num`}>5</p>
-            </NavLink>
           </div>
         </>
-
         <>
           <NavLink to="/cart" className="header-r">
             <i className="fa-solid fa-cart-shopping"></i>
