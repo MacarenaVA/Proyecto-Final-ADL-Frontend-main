@@ -5,7 +5,7 @@ import axios from "axios"
 
 const DogsProductList = () => {
   const [dogProducts, setDogProducts] = useState([])
-  const { cartProducts, updateCart } = useContext(MyContext)
+  const { cartProducts, updateCart, isAuthenticated } = useContext(MyContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,29 +24,34 @@ const DogsProductList = () => {
   }, [])
 
   const handleClick = (product) => {
-    navigate(`/${product.id}`)
-  }
-  const onAddProduct = (product) => {
-    const productInCart = cartProducts.find((item) => item.id === product.id)
-
-    if (productInCart) {
-      const updatedProductInCart = {
-        ...productInCart,
-        qty: productInCart.qty + 1,
-      }
-      const updatedCartProducts = cartProducts.map((item) =>
-        item.id === product.id ? updatedProductInCart : item
-      )
-
-      updateCart(updatedCartProducts)
-    } else {
-      product.qty = 1
-      const updatedCartProducts = [...cartProducts, product]
-
-      updateCart(updatedCartProducts)
+    if (isAuthenticated) {
+      navigate(`/${product.id}`)
     }
+  }
 
-    console.log("Producto agregado al carrito:", product)
+  const onAddProduct = (product) => {
+    if (isAuthenticated) {
+      const productInCart = cartProducts.find((item) => item.id === product.id)
+
+      if (productInCart) {
+        const updatedProductInCart = {
+          ...productInCart,
+          qty: productInCart.qty + 1,
+        }
+        const updatedCartProducts = cartProducts.map((item) =>
+          item.id === product.id ? updatedProductInCart : item
+        )
+
+        updateCart(updatedCartProducts)
+      } else {
+        product.qty = 1
+        const updatedCartProducts = [...cartProducts, product]
+
+        updateCart(updatedCartProducts)
+      }
+
+      console.log("Producto agregado al carrito:", product)
+    }
   }
 
   const chile = new Intl.NumberFormat("es-CL")

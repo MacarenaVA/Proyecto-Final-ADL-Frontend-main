@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
 import MyContext from "../Context/MyContext"
-
 import { Link, Navigate } from "react-router-dom"
 import axios from "axios"
 import "../App.css"
@@ -100,8 +99,6 @@ function MyPosts() {
                 <div className="img-container">
                   <img src={post.img} alt={post.name} className="post-image" />
                 </div>
-
-                {console.log("Ruta de la imagen:", post.image)}
               </div>
             ))}
           </div>

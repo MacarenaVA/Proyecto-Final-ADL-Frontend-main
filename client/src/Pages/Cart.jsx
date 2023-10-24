@@ -4,34 +4,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
 
 const Cart = () => {
-  const { cartProducts, updateCart, countProducts, total } =
+  const { cartProducts, updateCart, countProducts, total, isAuthenticated } =
     useContext(MyContext)
 
   const updateProductQuantity = (product, increment) => {
-    console.log("Incremento:", increment)
-    const updatedProducts = cartProducts.map((item) => {
-      if (item.id === product.id) {
-        const newQty = Math.max(item.qty + increment, 0)
-        console.log("Nueva cantidad:", newQty)
-        return { ...item, qty: newQty }
-      }
-      return item
-    })
+    if (isAuthenticated) {
+      const updatedProducts = cartProducts.map((item) => {
+        if (item.id === product.id) {
+          const newQty = Math.max(item.qty + increment, 0)
+          return { ...item, qty: newQty }
+        }
+        return item
+      })
 
-    console.log("Productos actualizados:", updatedProducts)
-    updateCart(updatedProducts)
+      updateCart(updatedProducts)
+    }
   }
 
   const onDeleteProduct = (product) => {
-    const updatedProducts = cartProducts.filter(
-      (item) => item.id !== product.id
-    )
+    if (isAuthenticated) {
+      const updatedProducts = cartProducts.filter(
+        (item) => item.id !== product.id
+      )
 
-    updateCart(updatedProducts)
+      updateCart(updatedProducts)
+    }
   }
 
   const onDeleteCart = () => {
-    updateCart([])
+    if (isAuthenticated) {
+      updateCart([])
+    }
   }
 
   const chile = new Intl.NumberFormat("es-CL")
@@ -64,8 +67,6 @@ const Cart = () => {
                     className="fa-plus"
                     onClick={() => updateProductQuantity(product, 1)}
                   />
-                  {console.log("Precio del producto:", product.price)}
-                  {console.log("Cantidad del producto:", product.qty)}
                   <p className="subtotal"> $ {product.price * product.qty}</p>
                   <button
                     className="remove-button"

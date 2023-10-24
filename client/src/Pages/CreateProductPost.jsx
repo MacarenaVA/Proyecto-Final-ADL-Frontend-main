@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useContext } from "react"
-import MyContext from "../Context/MyContext"
+import React, { useState, useContext } from "react"
 import { Link, Navigate } from "react-router-dom"
+import MyContext from "../Context/MyContext"
 import axios from "axios"
 import "../App.css"
 
@@ -24,9 +24,9 @@ function CreateProductPost() {
   }
 
   const handleSubmit = async (e) => {
-    console.log(user.id)
     e.preventDefault()
     setIsSubmitting(true)
+
     if (
       !product.name ||
       !product.description ||
@@ -39,25 +39,11 @@ function CreateProductPost() {
       setIsSubmitting(false)
       return
     }
-    console.log("Valores de product:", product)
 
     try {
-      const formData = new FormData()
-      formData.append("name", product.name)
-      formData.append("description", product.description)
-      formData.append("price", product.price)
-      formData.append("stock", product.stock)
-      formData.append("categoria", product.categoria)
-      formData.append("img", product.img)
-      formData.append("user_id", product.user_id)
-
-      console.log(product)
-
       const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
       const endpoint = "/products"
       const response = await axios.post(urlServer + endpoint, product)
-
-      console.log("URL de la solicitud:", urlServer + endpoint)
 
       if (response.status === 200) {
         console.log("La publicación se creó con éxito.")
@@ -65,7 +51,7 @@ function CreateProductPost() {
         console.error("Error al crear la publicación.")
       }
     } catch (error) {
-      console.log("Error al enviar la solicitud: " + error.message)
+      console.error("Error al enviar la solicitud: " + error.message)
     } finally {
       setIsSubmitting(false)
     }
@@ -166,7 +152,7 @@ function CreateProductPost() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="categoria">Categoria (Perro o gato):</label>
+            <label htmlFor="categoria">Categoría (Perro o gato):</label>
             <input
               type="text"
               id="categoria"
@@ -178,7 +164,7 @@ function CreateProductPost() {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="img">Imagen:</label>
+            <label htmlFor="img">Imagen URL:</label>
             <input
               type="text"
               id="img"

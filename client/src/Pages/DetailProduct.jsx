@@ -14,15 +14,15 @@ const DetailProduct = () => {
 
   const { id } = useParams()
   const product = allProducts.find((product) => product.id === parseInt(id))
-  console.log("Productos:", allProducts)
 
   if (!product) {
     return <div>Producto no encontrado.</div>
   }
 
   const chile = new Intl.NumberFormat("es-CL")
-  const productName =
-    product.name.charAt(0).toUpperCase() + product.name.slice(1)
+  const productName = product.name
+    ? product.name.charAt(0).toUpperCase() + product.name.slice(1)
+    : "Producto sin nombre"
 
   const onAddProduct = (product) => {
     const existingProduct = allProducts.find((item) => item.id === product.id)

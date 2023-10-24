@@ -3,12 +3,12 @@ import { Link, Navigate } from "react-router-dom"
 import MyContext from "../Context/MyContext"
 import ModifyProfile from "../Pages/ModifyProfile"
 import Favorites from "../Pages/Favorites"
-import "../App.css"
 import CreateProductPost from "./CreateProductPost"
 import MyPosts from "./MyPost"
+import "../App.css"
 
 function Profile() {
-  const { user, isAuthenticated, logout } = useContext(MyContext)
+  const { user, isAuthenticated, logout, login } = useContext(MyContext)
   const [selectedLink, setSelectedLink] = useState("Mi Perfil")
   const contentMap = {
     "Mi Perfil": `Bienvenido, ${user.email}.`,
@@ -21,9 +21,11 @@ function Profile() {
   const handleLinkClick = (link) => {
     setSelectedLink(link)
   }
+
   const handleLogout = () => {
     if (isAuthenticated) {
       logout()
+      login({})
       console.log("Sesión cerrada con éxito")
     } else {
       console.log(

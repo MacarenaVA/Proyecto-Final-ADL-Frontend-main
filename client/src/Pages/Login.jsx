@@ -12,7 +12,7 @@ import {
 } from "@mui/material"
 
 const Login = () => {
-  const { setUser, login } = useContext(MyContext)
+  const { setUser, login, isAuthenticated } = useContext(MyContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
 
@@ -34,12 +34,12 @@ const Login = () => {
 
       const response = await axios.post(urlServer + endpoint, formData)
       if (response.data && response.data.email) {
-        // Verifica que la respuesta contiene el email del usuario
         const { email, token, id } = response.data
         console.log("Usuario identificado con éxito")
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
-        setUser({ token, id, email }) // Asigna el email a la propiedad user.email
+        setUser({ token, id, email })
+        login({ email, id, token })
         navigate("/mi-perfil")
       } else {
         alert("La respuesta del servidor no contiene el email")
@@ -53,6 +53,10 @@ const Login = () => {
         alert("Ocurrió un error al iniciar sesión 🙁")
       }
     }
+  }
+
+  if (isAuthenticated) {
+    navigate("/mi-perfil")
   }
 
   return (
