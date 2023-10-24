@@ -1,4 +1,3 @@
-// PublicHeader.js
 import { NavLink } from "react-router-dom"
 import logo from "../assets/logo.png"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -9,7 +8,7 @@ import {
   faUser,
   faUserPlus,
   faShoppingCart,
-} from "@fortawesome/free-solid-svg-icons" // Importa el icono del carrito
+} from "@fortawesome/free-solid-svg-icons"
 
 const PublicHeader = () => {
   return (
