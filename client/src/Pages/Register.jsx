@@ -18,12 +18,8 @@ const Register = () => {
     const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
     const endpoint = "/usuarios"
     try {
-      const response = await axios.post(urlServer + endpoint, usuario)
-      if (response.status === 200) {
-        alert("Usuario registrado con éxito")
-      } else {
-        alert("Error al registrar el usuario")
-      }
+      await axios.post(urlServer + endpoint, usuario)
+      alert("Usuario registrado con éxito")
     } catch (error) {
       alert("Algo salió mal ...")
       console.log(error)

@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import Axios from "axios"
-import MyContext from "../Context/MyContext"
+import { MyContext } from "../Context/MyContext"
 
 function ModifyProfile() {
   const { user, updateUser, logout } = useContext(MyContext)

@@ -1,46 +1,35 @@
-import React, { useContext } from "react"
-import MyContext from "./Context/MyContext"
-import PublicHeader from "./components/PublicHeader"
-import PrivateHeader from "./components/PrivateHeader"
-import PublicRoutes from "./router/PublicRoutes"
-import PrivateRoutes from "./router/PrivateRoutes"
+import React, { useEffect, useState } from "react"
+import { MyContextProvider } from "./Context/MyContext"
+import Header from "./components/Header"
+import AppRouter from "./router/AppRouter"
 import Footer from "./components/Footer"
 
 function App() {
-  const {
-    token,
-    allProducts,
-    setAllProducts,
-    cartProducts,
-    updateCart,
-    countProducts,
-    total,
-    setUser,
-    login,
-    logout,
-  } = useContext(MyContext)
+  const [productData, setProductData] = useState([])
+  const [userData, setUserData] = useState([])
+  const [allProducts, setAllProducts] = useState([])
+  const [total, setTotal] = useState(0)
+  const [countProducts, setCountProducts] = useState(0)
+  const [user, setUser] = useState(null)
 
   return (
-    <div>
-      <MyContext.Provider
-        value={{
-          token,
-          allProducts,
-          setAllProducts,
-          cartProducts,
-          updateCart,
-          countProducts,
-          total,
-          setUser,
-          login,
-          logout,
-        }}
-      >
-        {token ? <PrivateHeader /> : <PublicHeader />}
-        {token ? <PrivateRoutes /> : <PublicRoutes />}
-      </MyContext.Provider>
+    <MyContextProvider
+      value={{
+        user,
+        setUser,
+        userData,
+        allProducts,
+        setAllProducts,
+        total,
+        setTotal,
+        countProducts,
+        setCountProducts,
+      }}
+    >
+      <Header />
+      <AppRouter />
       <Footer />
-    </div>
+    </MyContextProvider>
   )
 }
 

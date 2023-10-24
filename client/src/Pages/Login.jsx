@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import MyContext from "../Context/MyContext"
+import { MyContext } from "../Context/MyContext"
 import {
   Box,
   Button,
@@ -12,37 +12,38 @@ import {
 } from "@mui/material"
 
 const Login = () => {
-  const { setUser, login, isAuthenticated } = useContext(MyContext)
+  const { setUser } = useContext(MyContext)
   const navigate = useNavigate()
   const [formData, setFormData] = useState({})
+  const { login } = useContext(MyContext)
 
   const handleSetUsuario = ({ target: { value, name } }) => {
     const field = {}
     field[name] = value
     setFormData({ ...formData, ...field })
   }
-
   const log_in = async () => {
     const urlServer = "https://proyecto-final-adl-frontend-main.onrender.com"
     const endpoint = "/login"
     const { email, password } = formData
-
     try {
       if (!email || !password) {
         return alert("Email y contraseña son obligatorios")
       }
 
       const response = await axios.post(urlServer + endpoint, formData)
-      if (response.data && response.data.email) {
+      if (response.data) {
         const { email, token, id } = response.data
+        console.log(response.data)
         console.log("Usuario identificado con éxito")
+
         alert("Usuario identificado con éxito")
         localStorage.setItem("token", token)
-        setUser({ token, id, email })
-        login({ email, id, token })
+        setUser({ token, id })
         navigate("/mi-perfil")
+        login({ email, id })
       } else {
-        alert("La respuesta del servidor no contiene el email")
+        alert("La respuesta del servidor no contiene el token")
       }
     } catch (error) {
       if (error.response) {
@@ -53,10 +54,6 @@ const Login = () => {
         alert("Ocurrió un error al iniciar sesión 🙁")
       }
     }
-  }
-
-  if (isAuthenticated) {
-    navigate("/mi-perfil")
   }
 
   return (

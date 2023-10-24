@@ -1,11 +1,12 @@
 import React, { useContext, useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
-import MyContext from "../Context/MyContext"
+import { MyContext } from "../Context/MyContext"
 import axios from "axios"
 
 const DogsProductList = () => {
   const [dogProducts, setDogProducts] = useState([])
-  const { cartProducts, updateCart, isAuthenticated } = useContext(MyContext)
+  const { setCountProducts, setTotal, cartProducts, setCartProducts } =
+    useContext(MyContext)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,34 +25,53 @@ const DogsProductList = () => {
   }, [])
 
   const handleClick = (product) => {
-    if (isAuthenticated) {
-      navigate(`/${product.id}`)
-    }
+    navigate(`/${product.id}`)
   }
-
   const onAddProduct = (product) => {
-    if (isAuthenticated) {
-      const productInCart = cartProducts.find((item) => item.id === product.id)
+    const productInCart = cartProducts.find((item) => item.id === product.id)
 
-      if (productInCart) {
-        const updatedProductInCart = {
-          ...productInCart,
-          qty: productInCart.qty + 1,
-        }
-        const updatedCartProducts = cartProducts.map((item) =>
-          item.id === product.id ? updatedProductInCart : item
-        )
-
-        updateCart(updatedCartProducts)
-      } else {
-        product.qty = 1
-        const updatedCartProducts = [...cartProducts, product]
-
-        updateCart(updatedCartProducts)
+    if (productInCart) {
+      const updatedProductInCart = {
+        ...productInCart,
+        qty: productInCart.qty + 1,
       }
+      const updatedCartProducts = cartProducts.map((item) =>
+        item.id === product.id ? updatedProductInCart : item
+      )
 
-      console.log("Producto agregado al carrito:", product)
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    } else {
+      product.qty = 1
+      const updatedCartProducts = [...cartProducts, product]
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
     }
+
+    console.log("Producto agregado al carrito:", product)
   }
 
   const chile = new Intl.NumberFormat("es-CL")
