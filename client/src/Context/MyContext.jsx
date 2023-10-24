@@ -21,6 +21,7 @@ const MyContextProvider = ({ children }) => {
         if (response.status === 200) {
           const data = response.data
           setUser({ email: data.email, id: data.id })
+          setIsAuthenticated(true)
         } else {
           console.error("Error en validación de token:", response.status)
           localStorage.removeItem("token")
@@ -65,6 +66,7 @@ const MyContextProvider = ({ children }) => {
   const logout = () => {
     localStorage.removeItem("token")
     setUser({ email: null, id: null })
+    setIsAuthenticated(false)
     navigate("/login")
   }
 
