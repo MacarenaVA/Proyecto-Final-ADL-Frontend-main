@@ -10,7 +10,7 @@ import {
   faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons"
 
-const PublicHeader = () => {
+const PublicHeader = ({ cartProductCount }) => {
   const activeClass = ({ isActive }) => (isActive ? "active" : "")
 
   return (
