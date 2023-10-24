@@ -1,113 +1,109 @@
-import React, { useState, useEffect, useContext } from "react"
+import React, { useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { MyContext } from "../Context/MyContext"
-import { Link, Navigate } from "react-router-dom"
 import axios from "axios"
-import "../App.css"
 
-function MyPosts() {
-  const { user, logout } = useContext(MyContext)
-  const [userPosts, setUserPosts] = useState([])
-  const [user_id, setUser_id] = useState(null)
+const ProductList = () => {
+  const chile = new Intl.NumberFormat("es-CL")
+  const {
+    allProducts,
+    setAllProducts,
+    cartProducts,
+    setCartProducts,
+    setCountProducts,
+    setTotal,
+  } = useContext(MyContext)
+  const navigate = useNavigate()
 
   useEffect(() => {
-    if (user) {
-      setUser_id(user.id)
-    }
-  }, [user])
-
-  const fetchUserPosts = async () => {
-    if (!user_id) {
-      return
-    }
-
-    try {
-      const response = await axios.get(
-        `https://proyecto-final-adl-frontend-main.onrender.com/user-posts/${user_id}`
-      )
-
-      if (response.status === 200) {
-        setUserPosts(response.data)
-      } else {
-        console.error("Error al obtener las publicaciones del usuario.")
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://proyecto-final-adl-frontend-main.onrender.com/products"
+        )
+        setAllProducts(response.data)
+      } catch (error) {
+        console.error("Error al cargar productos:", error)
       }
-    } catch (error) {
-      console.error("Error al enviar la solicitud:", error)
     }
+
+    fetchData()
+  }, [setAllProducts])
+
+  const handleClick = (product) => {
+    navigate(`${product.id}`)
   }
 
-  useEffect(() => {
-    fetchUserPosts()
-  }, [user_id])
+  const onAddProduct = (product) => {
+    const productInCart = cartProducts.find((item) => item.id === product.id)
 
-  if (!user) {
-    return <Navigate to="/login" />
+    if (productInCart) {
+      const updatedProductInCart = {
+        ...productInCart,
+        qty: productInCart.qty + 1,
+      }
+      const updatedCartProducts = cartProducts.map((item) =>
+        item.id === product.id ? updatedProductInCart : item
+      )
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    } else {
+      product.qty = 1
+      const updatedCartProducts = [...cartProducts, product]
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    }
+
+    console.log("Producto agregado al carrito:", product)
   }
 
   return (
-    <div className="profile-container">
-      <div className="profile-sidebar">
-        <h1 className="profile-title">
-          <Link to="/profile" className="profile-link">
-            Mi Perfil
-          </Link>
-        </h1>
-        <ul className="profile-links">
-          <li>
-            <Link to="/profile" className="profile-link">
-              Mi Perfil
-            </Link>
-          </li>
-          <li>
-            <Link to="/modificar-perfil" className="profile-link">
-              Modificar Perfil
-            </Link>
-          </li>
-          <li>
-            <Link to="/mis-favoritos" className="profile-link">
-              Mis Favoritos
-            </Link>
-          </li>
-          <li>
-            <Link to="/crear-publicación" className="profile-link">
-              Crear Publicación
-            </Link>
-          </li>
-          <li>
-            <Link to="/mis-publicaciones" className="profile-link active">
-              Mis Publicaciones
-            </Link>
-          </li>
-        </ul>
-        <button onClick={logout} className="dark-button">
-          Cerrar Sesión
-        </button>
-      </div>
-
-      <div className="profile-content">
-        <h1 className="profile-content-title">Mis Publicaciones</h1>
-        {userPosts.length === 0 ? (
-          <p>No tienes publicaciones aún.</p>
-        ) : (
-          <div className="profile-posts-list">
-            {userPosts.map((post) => (
-              <div key={post.id} className="profile-post-item">
-                <Link to={`/${post.id}`} className="post-link">
-                  <h2>{post.name}</h2>
-                </Link>
-                <p className="post-description">{post.description}</p>
-                <p className="post-price">Precio: {post.price}</p>
-                <div className="img-container">
-                  <img src={post.img} alt={post.name} className="post-image" />
-                </div>
-
-                {console.log("Ruta de la imagen:", post.image)}
+    <div className="product-list-container">
+      <div className="product-list">
+        {Array.isArray(allProducts) &&
+          allProducts.map((product, index) => (
+            <div className="product-card" key={index}>
+              <div className="img-container">
+                <img src={product.img} alt={product.name} />
               </div>
-            ))}
-          </div>
-        )}
+              <h2 onClick={() => handleClick(product)}>
+                {product.name
+                  ? product.name.charAt(0).toUpperCase() + product.name.slice(1)
+                  : "No Name"}
+              </h2>
+              <p>{product.description}</p>
+              <button onClick={() => onAddProduct(product)}>
+                Agregar al Carrito - {chile.format(product.price)}
+              </button>
+            </div>
+          ))}
       </div>
     </div>
   )
 }
 
-export default MyPosts
+export default ProductList

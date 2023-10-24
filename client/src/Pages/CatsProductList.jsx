@@ -1,111 +1,102 @@
-import React, { useContext } from "react"
+import React, { useContext, useState, useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 import { MyContext } from "../Context/MyContext"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons"
+import axios from "axios"
 
-const Cart = () => {
-  const { cartProducts, updateCart, countProducts, total } =
+const CatsProductList = () => {
+  const [catsProducts, setCatsProducts] = useState([])
+  const { setCountProducts, setTotal, cartProducts, setCartProducts } =
     useContext(MyContext)
+  const navigate = useNavigate()
 
-  const updateProductQuantity = (product, increment) => {
-    console.log("Incremento:", increment)
-    const updatedProducts = cartProducts.map((item) => {
-      if (item.id === product.id) {
-        const newQty = Math.max(item.qty + increment, 0)
-        console.log("Nueva cantidad:", newQty)
-        return { ...item, qty: newQty }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://proyecto-final-adl-frontend-main.onrender.com/products/category/gatos"
+        )
+        setCatsProducts(response.data)
+      } catch (error) {
+        console.error(error)
       }
-      return item
-    })
+    }
 
-    console.log("Productos actualizados:", updatedProducts)
-    updateCart(updatedProducts)
+    fetchData()
+  }, [])
+
+  const handleClick = (product) => {
+    navigate(`/${product.id}`)
   }
 
-  const onDeleteProduct = (product) => {
-    const updatedProducts = cartProducts.filter(
-      (item) => item.id !== product.id
-    )
+  const onAddProduct = (product) => {
+    const productInCart = cartProducts.find((item) => item.id === product.id)
 
-    updateCart(updatedProducts)
-  }
+    if (productInCart) {
+      const updatedProductInCart = {
+        ...productInCart,
+        qty: productInCart.qty + 1,
+      }
+      const updatedCartProducts = cartProducts.map((item) =>
+        item.id === product.id ? updatedProductInCart : item
+      )
 
-  const onDeleteCart = () => {
-    updateCart([])
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    } else {
+      product.qty = 1
+      const updatedCartProducts = [...cartProducts, product]
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
+    }
+
+    console.log("Producto agregado al carrito:", product)
   }
 
   const chile = new Intl.NumberFormat("es-CL")
 
   return (
-    <div className="cart-container">
-      <div className="cart">
-        <div className="cart-l">
-          {cartProducts.length > 0 ? (
-            cartProducts.map((product) => (
-              <div className="cart-card" key={product.id}>
-                <div className="card-l">
-                  <div className="img-cart">
-                    <img src={product.img} alt={product.name} />
-                  </div>
-                  <div className="title-total">
-                    <h2>{product.name}</h2>
-                    <p>${product.price}</p>
-                  </div>
-                </div>
-                <div className="card-r">
-                  <FontAwesomeIcon
-                    icon={faMinus}
-                    className="fa-minus"
-                    onClick={() => updateProductQuantity(product, -1)}
-                  />
-                  <p className="each-qty">{product.qty}</p>
-                  <FontAwesomeIcon
-                    icon={faPlus}
-                    className="fa-plus"
-                    onClick={() => updateProductQuantity(product, 1)}
-                  />
-                  {console.log("Precio del producto:", product.price)}
-                  {console.log("Cantidad del producto:", product.qty)}
-                  <p className="subtotal"> $ {product.price * product.qty}</p>
-                  <button
-                    className="remove-button"
-                    onClick={() => onDeleteProduct(product)}
-                  >
-                    Remover
-                  </button>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="empty-cart">
-              <p>El carrito está vacío.</p>
+    <div className="product-list-container">
+      <div className="product-list">
+        {catsProducts.map((product) => (
+          <div className="product-card" id={product.id} key={product.id}>
+            <div className="img-container" onClick={() => handleClick(product)}>
+              <img src={product.img} alt={product.name} />
             </div>
-          )}
-          {cartProducts.length > 0 && (
-            <button className="delete-cart" onClick={onDeleteCart}>
-              Vaciar Carrito
+            <h2 onClick={() => handleClick(product)}>
+              {product.name.charAt(0).toUpperCase() + product.name.slice(1)}
+            </h2>
+            <p>{product.description}</p>
+            <button onClick={() => onAddProduct(product)}>
+              Agregar al Carrito - ${chile.format(product.price)}
             </button>
-          )}
-        </div>
-        <div className="cart-r">
-          {cartProducts.length > 0 && (
-            <>
-              <h2>Resumen</h2>
-              <div className="cant">
-                <p>Cantidad:</p>
-                <p className="cant-p">{countProducts} productos</p>
-              </div>
-              <div className="total">
-                <p>Total:</p>
-                <p className="total-p">${chile.format(total)}</p>
-              </div>
-              <button className="pay">Pagar</button>
-            </>
-          )}
-        </div>
+          </div>
+        ))}
       </div>
     </div>
   )
 }
 
-export default Cart
+export default CatsProductList
