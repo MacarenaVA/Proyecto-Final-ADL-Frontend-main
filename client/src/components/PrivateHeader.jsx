@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 const PrivateHeader = ({ logout, cartProductCount }) => {
+  const activeClass = ({ isActive }) => (isActive ? "active" : "")
+
   const handleLogout = () => {
     logout()
   }
@@ -24,7 +26,7 @@ const PrivateHeader = ({ logout, cartProductCount }) => {
           </NavLink>
         </div>
         <div className="header-c">
-          <NavLink to="/" activeClassName="active">
+          <NavLink className={activeClass} to="/">
             <FontAwesomeIcon icon={faHouse} />
             Inicio
           </NavLink>

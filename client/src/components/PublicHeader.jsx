@@ -11,6 +11,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons"
 
 const PublicHeader = () => {
+  const activeClass = ({ isActive }) => (isActive ? "active" : "")
+
   return (
     <div className="header-container">
       <header>
