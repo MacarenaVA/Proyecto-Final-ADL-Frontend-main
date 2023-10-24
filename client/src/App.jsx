@@ -11,7 +11,7 @@ function App() {
 
   return (
     <div>
-      <MyContext.Provider>
+      <MyContext.Provider value={{ token }}>
         {token ? <PrivateHeader /> : <PublicHeader />}
         {token ? <PrivateRoutes /> : <PublicRoutes />}
       </MyContext.Provider>
