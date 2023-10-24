@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react"
-import { MyContext } from "../Context/MyContext"
+import MyContext from "../Context/MyContext"
+
 import { Link, Navigate } from "react-router-dom"
 import axios from "axios"
 import "../App.css"
