@@ -3,14 +3,8 @@ import { useParams } from "react-router-dom"
 import { MyContext } from "../Context/MyContext"
 
 const DetailProduct = () => {
-  const {
-    allProducts,
-    setAllProducts,
-    countProducts,
-    setCountProducts,
-    total,
-    setTotal,
-  } = useContext(MyContext)
+  const { setCountProducts, setTotal, cartProducts, setCartProducts } =
+    useContext(MyContext)
 
   const { id } = useParams()
   const product = allProducts.find((product) => product.id === parseInt(id))
@@ -25,24 +19,50 @@ const DetailProduct = () => {
     product.name.charAt(0).toUpperCase() + product.name.slice(1)
 
   const onAddProduct = (product) => {
-    const existingProduct = allProducts.find((item) => item.id === product.id)
+    const productInCart = cartProducts.find((item) => item.id === product.id)
 
-    if (existingProduct) {
-      const updatedProduct = { ...existingProduct }
-      updatedProduct.qty += 1
-
-      const updatedProducts = allProducts.map((item) =>
-        item.id === product.id ? updatedProduct : item
+    if (productInCart) {
+      const updatedProductInCart = {
+        ...productInCart,
+        qty: productInCart.qty + 1,
+      }
+      const updatedCartProducts = cartProducts.map((item) =>
+        item.id === product.id ? updatedProductInCart : item
       )
 
-      setAllProducts(updatedProducts)
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
     } else {
-      const newProduct = { ...product, qty: 1 }
-      setAllProducts([...allProducts, newProduct])
+      product.qty = 1
+      const updatedCartProducts = [...cartProducts, product]
+
+      setCartProducts(updatedCartProducts)
+
+      const newCountProducts = updatedCartProducts.reduce(
+        (count, item) => count + item.qty,
+        0
+      )
+      const newTotal = updatedCartProducts.reduce(
+        (total, item) => total + item.price * item.qty,
+        0
+      )
+
+      setCountProducts(newCountProducts)
+      setTotal(newTotal)
     }
 
-    setCountProducts(countProducts + 1)
-    setTotal(total + product.price)
+    console.log("Producto agregado al carrito:", product)
   }
 
   return (
