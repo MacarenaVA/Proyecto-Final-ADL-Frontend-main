@@ -26,7 +26,7 @@ const PrivateHeader = ({ logout, cartProductCount }) => {
           </NavLink>
         </div>
         <div className="header-c">
-          <NavLink className={activeClass} to="/">
+          <NavLink getProps={activeClass} to="/">
             <FontAwesomeIcon icon={faHouse} />
             Inicio
           </NavLink>
