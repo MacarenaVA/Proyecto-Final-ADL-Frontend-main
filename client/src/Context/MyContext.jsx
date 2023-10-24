@@ -10,7 +10,7 @@ const MyContextProvider = ({ children }) => {
   const [countProducts, setCountProducts] = useState(0)
   const [total, setTotal] = useState(0)
   const [user, setUser] = useState({ email: null, id: null })
-
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
   const navigate = useNavigate()
 
   const validateToken = async () => {
@@ -23,7 +23,6 @@ const MyContextProvider = ({ children }) => {
           setUser({ email: data.email, id: data.id })
         } else {
           console.error("Error en validación de token:", response.status)
-          // Limpiar el token si no es válido
           localStorage.removeItem("token")
         }
       } catch (error) {
@@ -33,11 +32,34 @@ const MyContextProvider = ({ children }) => {
   }
 
   const updateCart = (updatedProducts) => {
-    // ... (resto del código como antes)
+    const newCountProducts = updatedProducts.reduce(
+      (count, product) => count + product.qty,
+      0
+    )
+    const newTotal = updatedProducts.reduce(
+      (total, product) => total + product.price * product.qty,
+      0
+    )
+    setCountProducts(newCountProducts)
+    setTotal(newTotal)
+    setCartProducts(updatedProducts)
   }
 
   const login = async (userData) => {
-    // ... (resto del código como antes)
+    try {
+      const response = await axios.post("/login", userData)
+
+      if (response.status === 200) {
+        const data = response.data
+        localStorage.setItem("token", data.token)
+        setUser({ email: userData.email, id: data.id })
+        setIsAuthenticated(true)
+      } else {
+        console.error("Error en inicio de sesión:", response.status)
+      }
+    } catch (error) {
+      console.error("Error en inicio de sesión:", error)
+    }
   }
 
   const logout = () => {
@@ -48,13 +70,15 @@ const MyContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      // ... (resto del código como antes)
+      try {
+        const response = await axios.get("/")
+        setAllProducts(response.data)
+      } catch (error) {
+        console.error("Error al obtener los productos:", error)
+      }
     }
 
     fetchProducts()
-
-    // Validar el token al cargar la aplicación
-    validateToken()
   }, [])
 
   return (
@@ -71,6 +95,7 @@ const MyContextProvider = ({ children }) => {
         setUser,
         login,
         logout,
+        isAuthenticated,
         navigate,
         cartProducts,
         setCartProducts,
