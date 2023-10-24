@@ -7,7 +7,6 @@ import {
   faHouse,
   faUser,
   faUserPlus,
-  faShoppingCart,
 } from "@fortawesome/free-solid-svg-icons"
 
 const PublicHeader = ({ cartProductCount }) => {

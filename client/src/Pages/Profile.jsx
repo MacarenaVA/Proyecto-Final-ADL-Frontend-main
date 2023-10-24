@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import { Link, Navigate } from "react-router-dom"
-import { MyContext } from "../Context/MyContext"
+import MyContext from "../Context/MyContext"
 import ModifyProfile from "../Pages/ModifyProfile"
 import Favorites from "../Pages/Favorites"
 import "../App.css"

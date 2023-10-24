@@ -7,7 +7,6 @@ import {
   faDog,
   faHouse,
   faUser,
-  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons"
 
 const PrivateHeader = ({ logout, cartProductCount }) => {
