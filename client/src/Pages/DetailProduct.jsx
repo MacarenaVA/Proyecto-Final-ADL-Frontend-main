@@ -3,8 +3,15 @@ import { useParams } from "react-router-dom"
 import { MyContext } from "../Context/MyContext"
 
 const DetailProduct = () => {
-  const { setCountProducts, setTotal, cartProducts, setCartProducts } =
-    useContext(MyContext)
+  const {
+    allProducts,
+    setAllProducts,
+    countProducts,
+    setCountProducts,
+    setTotal,
+    cartProducts,
+    setCartProducts,
+  } = useContext(MyContext)
 
   const { id } = useParams()
   const product = allProducts.find((product) => product.id === parseInt(id))
