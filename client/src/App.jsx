@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import { MyContextProvider, MyContext } from "./Context/MyContext"
+import MyContext from "./Context/MyContext"
 import PublicHeader from "./components/PublicHeader"
 import PrivateHeader from "./components/PrivateHeader"
 import PublicRoutes from "./router/PublicRoutes"
@@ -11,10 +11,10 @@ function App() {
 
   return (
     <div>
-      <MyContextProvider>
+      <MyContext.Provider>
         {token ? <PrivateHeader /> : <PublicHeader />}
         {token ? <PrivateRoutes /> : <PublicRoutes />}
-      </MyContextProvider>
+      </MyContext.Provider>
       <Footer />
     </div>
   )
